@@ -107,19 +107,19 @@
 
 
 
-<meta name="description" content="对自编码及时间序列特征提取的总结栈式自编码器(SAE)是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。">
+<meta name="description" content="对自编码及时间序列特征提取的总结介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
 <meta name="keywords" content="论文（学术）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对自编码及时间序列特征提取的总结">
 <meta property="og:url" content="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="对自编码及时间序列特征提取的总结栈式自编码器(SAE)是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。">
+<meta property="og:description" content="对自编码及时间序列特征提取的总结介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
-<meta property="og:updated_time" content="2019-07-15T14:10:20.155Z">
+<meta property="og:updated_time" content="2019-07-15T14:56:27.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对自编码及时间序列特征提取的总结">
-<meta name="twitter:description" content="对自编码及时间序列特征提取的总结栈式自编码器(SAE)是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。">
+<meta name="twitter:description" content="对自编码及时间序列特征提取的总结介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
 <meta name="twitter:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
 
 
@@ -381,14 +381,17 @@
       
 
       
-        <h2 id="对自编码及时间序列特征提取的总结"><a href="#对自编码及时间序列特征提取的总结" class="headerlink" title="对自编码及时间序列特征提取的总结"></a>对自编码及时间序列特征提取的总结</h2><p><strong>栈式自编码器(SAE)</strong>是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。<a id="more"></a></p>
+        <h1 id="对自编码及时间序列特征提取的总结"><a href="#对自编码及时间序列特征提取的总结" class="headerlink" title="对自编码及时间序列特征提取的总结"></a>对自编码及时间序列特征提取的总结</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。<a id="more"></a>而找寻相似的时间序列频繁模式在时间序列的挖掘中有相当重要的意义，例如，我们要找寻某一个股票的走势，或者对股票进行分析，我们需要找出这只股票的一些频繁的周期，也叫motif查询，就是找出股票中走势相似的某些时间序列片段，那么，我们要找寻这些片段就需要用到距离测量的算法，例如欧式距离，相关系数距离等，然后通过距离阀值找到小于某个阀值的片段。在找寻这些片段时可能要花费大量的时间，这时我们就需要到一些降维的技术来缩短，本文所讨论的是单变量的时间序列，在传统的方法中，我们有paa分段技术，符号化sax，主成分分析法pca等等，这些都是传统的降维方法，本blog通过大量文章的阅读，提出了用自编码器研究时间序列特征提取，并大量实验测量降维后的特征向量是否保持原有的时间序列的特征。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p><strong>栈式自编码器特征提取</strong>是指</p>
+<h3 id="时间序列定义"><a href="#时间序列定义" class="headerlink" title="时间序列定义"></a>时间序列定义</h3><p><strong>时间序列(TimeSeries)</strong></p>
+<h3 id="栈式自编码器的定义"><a href="#栈式自编码器的定义" class="headerlink" title="栈式自编码器的定义"></a>栈式自编码器的定义</h3><p><strong>栈式自编码器(SAE)</strong>是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。<!--more--></p>
 <center>
 <img src="https://chen-tzliang.github.io/about/images/1.1.png" width="30%" height="10%">
 <br>
 图1.1 自动编码器网络示意图
 </center>
 
-<p>栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.1，首先用自动编码器训练原始数据X<sub>i</sub>，得到网络模型的参数W<sub>1</sub>,b<sub>1</sub>和原始数据的一阶特征表示h<sup>1</sup>，然后将一阶特征h<sup>1</sup>作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数W<sub>2</sub>,b<sub>2</sub>和特征</p>
+<p>栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.1，首先用自动编码器训练原始数据X<sub>i</sub>，得到网络模型的参数W<sub>1</sub>,b<sub>1</sub>和原始数据的一阶特征表示h<sup>1</sup>，然后将一阶特征h<sup>1</sup>作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数W<sub>2</sub>,b<sub>2</sub>和二阶特征表示h<sup>2</sup>,训练过程中，保持其他层的参数不变。最后，当训练完成后，通过微调整个网络模型，以改善整个网络模型的学习效果。</p>
 
       
     </div>
@@ -409,7 +412,7 @@
   <p><span>本文标题:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/">对自编码及时间序列特征提取的总结</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年07月15日 - 21:51</p>
-  <p><span>最后更新:</span>2019年07月15日 - 22:10</p>
+  <p><span>最后更新:</span>2019年07月15日 - 22:56</p>
   <p><span>原始链接:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/" title="对自编码及时间序列特征提取的总结">https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/" aria-label="复制成功！"></i></span>
   </p>
@@ -639,7 +642,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对自编码及时间序列特征提取的总结"><span class="nav-text">对自编码及时间序列特征提取的总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对自编码及时间序列特征提取的总结"><span class="nav-text">对自编码及时间序列特征提取的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间序列定义"><span class="nav-text">时间序列定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈式自编码器的定义"><span class="nav-text">栈式自编码器的定义</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
