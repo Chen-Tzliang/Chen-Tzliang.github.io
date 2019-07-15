@@ -13,6 +13,20 @@
 <meta name="theme-color" content="#222">
 <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
 <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<script>
+    (function () {
+        if ('') {
+            if (prompt('请输入文章密码') !== '') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://chen-tzliang.github.io/"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
 <style>
     .pace .pace-progress {
         background: #1E92FB; /*进度条颜色*/
@@ -275,6 +289,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈紫良">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Czl的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/15/对自编码及时间序列特征提取的总结/" itemprop="url">对自编码及时间序列特征提取的总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-15T21:51:25+08:00">
+                2019-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文（学术）/" itemprop="url" rel="index">
+                    <span itemprop="name">论文（学术）</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="对自编码及时间序列特征提取的总结"><a href="#对自编码及时间序列特征提取的总结" class="headerlink" title="对自编码及时间序列特征提取的总结"></a>对自编码及时间序列特征提取的总结</h2><p><strong>栈式自编码器(SAE)</strong>是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。</p>
+<center>
+<img src="https://chen-tzliang.github.io/_posts/images/1.1.png" width="50%" height="10%">
+<br>
+图1.1 自动编码器网络示意图
+</center>
+
+<p>栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.1，首先用自动编码器训练原始数据X<sub>i</sub>，得到网络模型的参数W<sub>1</sub>,b<sub>1</sub>和原始数据的一阶特征表示h<sup>1</sup>，然后将一阶特征h<sup>1</sup>作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数W<sub>2</sub>,b<sub>2</sub>和特征</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+    
+         
+    
+    
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://chen-tzliang.github.io/2019/07/10/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -443,7 +607,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

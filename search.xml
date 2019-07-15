@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[对自编码及时间序列特征提取的总结]]></title>
+    <url>%2F2019%2F07%2F15%2F%E5%AF%B9%E8%87%AA%E7%BC%96%E7%A0%81%E5%8F%8A%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96%E7%9A%84%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[对自编码及时间序列特征提取的总结栈式自编码器(SAE)是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.1所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。 图1.1 自动编码器网络示意图 栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.1，首先用自动编码器训练原始数据Xi，得到网络模型的参数W1,b1和原始数据的一阶特征表示h1，然后将一阶特征h1作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数W2,b2和特征]]></content>
+      <categories>
+        <category>论文（学术）</category>
+      </categories>
+      <tags>
+        <tag>论文（学术）</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2019%2F07%2F10%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
