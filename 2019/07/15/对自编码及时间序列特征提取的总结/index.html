@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.2.png">
-<meta property="og:updated_time" content="2019-07-17T06:21:12.530Z">
+<meta property="og:updated_time" content="2019-07-17T06:22:51.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对自编码及时间序列特征提取的总结">
 <meta name="twitter:description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
@@ -454,7 +454,7 @@ $$W\leftarrow W-\eta\frac{\partial Loss(X,\hat{X})}{\partial W}$$       (6)
 
 $$d(x,y)= \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}= \sqrt{\sum_{i=1}^n(x_i-y_i)^2}</script><p>欧式公式是度量两个子序列之间的距离的，当距离越小时，代表两个片段越相似，同理，当距离越大时，两个片段越不相似。</p>
 <h2 id="栈式自编码器提取时间序列特征实现"><a href="#栈式自编码器提取时间序列特征实现" class="headerlink" title="栈式自编码器提取时间序列特征实现"></a>栈式自编码器提取时间序列特征实现</h2><h3 id="2-1-数据预处理的实现"><a href="#2-1-数据预处理的实现" class="headerlink" title="2.1 数据预处理的实现"></a>2.1 数据预处理的实现</h3><p>在这一步中我们着重构建一个适合于神经网络学习的数据集，构建一个适合于神经网络输入的向量矩阵，我们的目标是特征提取，当然我们不能直接输入整个时间序列，全部一次性进行特征提取，因此我们从子序列入手，在这一步，我们先读取准备好的时间序列文本salinity.txt。该数据集含有40m，初步估计有几百万个时间点数据。预处理的第一步是进行最小值最大值规范化，之后按长度为256，滑动窗口为64进行切分该时间序列$T$，切分后的时间序列应该是一个个长为256的子序列片段，$T<em>0$,$T</em>{64}$,…，然后按每k个样本进行合成矩阵，之后把这些矩阵合并成一个3维的空间模型F，这就完成了数据集的整理，流程如算法1</p>
-<h4 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h4><hr>
+<hr>
 <p>Procedure dataProcess(filePath)</p>
 <p>Input:时间序列T</p>
 <p>Output:适合于神经网络的3维空间模型F，包含大小为k的向量组成矩阵</p>
@@ -485,7 +485,7 @@ $$d(x,y)= \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}= \sqrt{\sum_{i=1}^n(x_i
   <p><span>本文标题:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/">对自编码及时间序列特征提取的总结</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年07月15日 - 21:51</p>
-  <p><span>最后更新:</span>2019年07月17日 - 14:21</p>
+  <p><span>最后更新:</span>2019年07月17日 - 14:22</p>
   <p><span>原始链接:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/" title="对自编码及时间序列特征提取的总结">https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/" aria-label="复制成功！"></i></span>
   </p>
@@ -715,7 +715,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据预处理的实现"><span class="nav-text">2.1 数据预处理的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法1"><span class="nav-text">算法1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-栈式自编码器实现"><span class="nav-text">2.2 栈式自编码器实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据预处理的实现"><span class="nav-text">2.1 数据预处理的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-栈式自编码器实现"><span class="nav-text">2.2 栈式自编码器实现</span></a></li></ol></li></ol></div>
             
 
           </div>
