@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.2.png">
-<meta property="og:updated_time" content="2019-07-17T08:40:56.770Z">
+<meta property="og:updated_time" content="2019-07-17T15:27:03.408Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对自编码及时间序列特征提取的总结">
 <meta name="twitter:description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
@@ -435,13 +435,13 @@
 <p><strong>Procedure</strong> dataProcess(filePath)</p>
 <p><strong>Input</strong>:时间序列T</p>
 <p><strong>Output</strong>:适合于神经网络的3维空间模型F，包含大小为k的向量组成矩阵</p>
-<p>T$\leftarrow$getFile(filePath)</p>
-<p>t$\leftarrow$MaxMinScore(T)</p>
-<p>M$\leftarrow$TsSplitAndCombineMatrix(m,window)</p>
-<p>F$\leftarrow$MCombineSpace(k)</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>t $\leftarrow$ MaxMinScore(T)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>F $\leftarrow$ MCombineSpace(k)</p>
 <p>return F</p>
 <hr>
-<p>对于算法1，我们最终得到的是一个3维的空间模型，fetFile()函数可以读取时间序列文件返回原始时间序列，MaxMinScore()对时间序列进行最小值最大值规范化处理。TsSplitAndCombineMatrix()中的m是指子序列的片段大小，window是指滑动窗口大小，该方法返回的是以子序列向量组成的向量矩阵。MCombineSpace()中的k是每个合成矩阵的大小，返回的F是合成矩阵的集合。该空间模型也是神经网络的输入数据集。</p>
+<p>对于算法1，我们最终得到的是一个3维的空间模型，getFile()函数可以读取时间序列文件返回原始时间序列，MaxMinScore()对时间序列进行最小值最大值规范化处理。TsSplitAndCombineMatrix()中的m是指子序列的片段大小，window是指滑动窗口大小，该方法返回的是以子序列向量组成的向量矩阵。MCombineSpace()中的k是每个合成矩阵的大小，返回的F是合成矩阵的集合。该空间模型也是神经网络的输入数据集。</p>
 <h3 id="2-2-栈式自编码器实现"><a href="#2-2-栈式自编码器实现" class="headerlink" title="2.2 栈式自编码器实现"></a>2.2 栈式自编码器实现</h3><p>栈式自编码器的实现是本文的核心的步骤，首先我们的目标是输入一个256维的时间序列子片段，通过该栈式自编码器能够提取相应的特征向量。我们得设置一些神经网络的参数，在实现过程中，我们设置一个输入层，两个隐藏层，一个输出层，该栈式自编码网络提取的特征向量是第二个隐藏层，我们的输入层设置为256，第一个隐藏层的输出设置为128，然后激活函数用的是sigmoid()函数。</p>
 <p>因此，第一层输入为X，第一层自编码器权重矩阵W1_e应该是[256,128]，相应的第一层的解码器权重矩阵W1_d应该是[128,256],第一层的偏置量b1_e应该是[128],第一层的解码器偏置量b1_d应该是[256]，第一层的输出为Z1，根据公式(3)(4)原理实现第一层，根据公式(5)来编写这一层的重构误差，利用BP梯度下降公式(6)进行这一层的网络学习训练，具体的算法2如下</p>
 <h4 id="算法2"><a href="#算法2" class="headerlink" title="算法2"></a>算法2</h4><hr>
@@ -465,7 +465,7 @@
 <p><strong>Output</strong>:训练得到model</p>
 <p>(W2_e，W2_d，b2_e，b2_d)$\leftarrow$ WeightInitialization(W2_e，W2_d，b2_e，b2_d)</p>
 <p>for each $X_i$ in F:<br>{</p>
-<p>$Z1$ $\leftarrow$ Encoder1(W1_e，b1_e)</p>
+<p>$Z1$ $\leftarrow$ Encoder1(W1_e,b1_e,$X_i$)</p>
 <p>$Z2$ $\leftarrow$ Encoder2(W2_e,b2_e,$Z1$)</p>
 <p>$\hat{Z1}$ $\leftarrow$ Decoder2(W1_d,b1_d,$Z2$)</p>
 <p>loss=caluteLoss($Z1$,$\hat{Z1}$)</p>
@@ -476,7 +476,43 @@
 <hr>
 <p>上述算法3WeightInitialization()函数也是初始化第二层的权重，Z1是第一层隐藏层的编码，第二层是对第一层的重复利用，只不过输入的是第一层的编码，重构的是第一层的编码，同样该层也是运用BP梯度下降来更新权重，在训练完成后，我们需要通过saveModel()函数将模型保存下来。</p>
 <p>通过算法1、2、3，我们已经完成了神经网络的训练，最终我们得到一个模型，该模型的功能如公式(1),其中m是256，l是64，所以当我们输入一个时间序列的子序列长度为256时，我们能通过模型直接得到64维的自编码器提取后的特征向量，至此神经网络的训练基本上完成，以下是验证该网络的效果和准确率。</p>
-<h2 id="模型提取特征的效果和结果"><a href="#模型提取特征的效果和结果" class="headerlink" title="模型提取特征的效果和结果"></a>模型提取特征的效果和结果</h2>
+<h3 id="2-3-原始方法找寻motif"><a href="#2-3-原始方法找寻motif" class="headerlink" title="2.3 原始方法找寻motif"></a>2.3 原始方法找寻motif</h3><p>原始方法暴力求解距离矩阵可以找到正确的motif，这里我们的原始方法同样用的是欧式距离，当然我们也可以用相关系数的方法来找出motif，但是这里我们采用的是欧式距离，因为我们仅仅用来检测神经网络的降维效果。为了简单起见，我们用的测试数据点大约是60000个点，为了避免重复计算，我们建立滑动窗口，大小同样为64，所谓的暴力算法，就是使用循环来找寻这个距离矩阵，具体的原理可以参考上述1.4motif的查找方法，最后我们给原始方法设置一个阀值$\varepsilon$，例如，当我们找到矩阵中小于$\varepsilon$的值是D[3][10],矩阵的下标是记录的起始位置，当然这个位置得乘上滑动窗口，D[3][10]代表的是T[3 <em> 64:3 </em> 64+256]跟T[10 <em> 64:10 </em> 64+256]的两个子序列的距离，因为它们之间的距离小于$\varepsilon$，因此这两个子序列片段为一个motif。原始方法找寻motif的方法如算法4</p>
+<h4 id="算法4"><a href="#算法4" class="headerlink" title="算法4"></a>算法4</h4><hr>
+<p><strong>Procedure</strong> findMotif(filePath)</p>
+<p><strong>Input</strong>:时间序列T</p>
+<p><strong>Output</strong>:motif</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>for i in range(0,len(M)){</p>
+<p>for j in range(i,len(M)){</p>
+<p>dist $\leftarrow$ calculateEd(M[i],M[j])</p>
+<p>D[i][j] $\leftarrow$ dist</p>
+<p>}</p>
+<p>}</p>
+<p>motif $\leftarrow$ lessThanVarepsilon(D)</p>
+<p>return motif</p>
+<hr>
+<p>上述算法是原始找寻motif的方法，T是读取文件得到的时间序列，M是以大小为256对时间序列进行切分，滑动窗口为64的向量矩阵，矩阵的第一行就是以0开始的大小为256的子序列，第二行是64开始的，长度为256的第二个子序列，依次下去。calculateEd()函数计算的是两个子序列的欧几里得距离，D是所有子序列之间的距离矩阵，lessThanVarepsilon()是找出距离矩阵D中小于阀值$\varepsilon$的值，即为motif。</p>
+<h3 id="2-4-特征提取后找寻的motif"><a href="#2-4-特征提取后找寻的motif" class="headerlink" title="2.4 特征提取后找寻的motif"></a>2.4 特征提取后找寻的motif</h3><p>特征提取找寻motif只需在中间添加一个步骤就是神经网络提取特征的那一个步骤,把上面的算法加以改进就是神经网络降维找寻motif的方法了，如算法5</p>
+<h4 id="算法5"><a href="#算法5" class="headerlink" title="算法5"></a>算法5</h4><hr>
+<p><strong>Procedure</strong> findMotif(filePath)</p>
+<p><strong>Input</strong>:时间序列T</p>
+<p><strong>Output</strong>:motif</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>for i in range(0,len(M)){</p>
+<p>for j in range(i,len(M)){</p>
+<p>S1 $\leftarrow$ model(M[i])</p>
+<p>S2 $\leftarrow$ model(M[j])</p>
+<p>dist $\leftarrow$ calculateEd(S1,S2)</p>
+<p>D[i][j] $\leftarrow$ dist</p>
+<p>}</p>
+<p>}</p>
+<p>motif $\leftarrow$ lessThanVarepsilon(D)</p>
+<p>return motif</p>
+<hr>
+<p>上述算法添加了特征提取的model()那个步骤，目的是验证看神经网络进行特征提取之后特征向量跟原始时间序列是否保持原有的特征，也想通过代码验证这种自编码的方法在实现特征提取是否为原始序列的另一种良好表述。</p>
+<h2 id="实验结果及分析"><a href="#实验结果及分析" class="headerlink" title="实验结果及分析"></a>实验结果及分析</h2>
       
     </div>
     
@@ -496,7 +532,7 @@
   <p><span>本文标题:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/">对自编码及时间序列特征提取的总结</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年07月15日 - 21:51</p>
-  <p><span>最后更新:</span>2019年07月17日 - 16:40</p>
+  <p><span>最后更新:</span>2019年07月17日 - 23:27</p>
   <p><span>原始链接:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/" title="对自编码及时间序列特征提取的总结">https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/" aria-label="复制成功！"></i></span>
   </p>
@@ -730,7 +766,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-时间序列的预处理"><span class="nav-text">1.2 时间序列的预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-时间序列规范化"><span class="nav-text">1.2.1 时间序列规范化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-适合神经网络的时间序列子序列的片段向量矩阵"><span class="nav-text">1.2.2 适合神经网络的时间序列子序列的片段向量矩阵</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-栈式自编码器"><span class="nav-text">1.3 栈式自编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-motif的查找方法"><span class="nav-text">1.4 motif的查找方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据预处理的实现"><span class="nav-text">2.1 数据预处理的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法1"><span class="nav-text">算法1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-栈式自编码器实现"><span class="nav-text">2.2 栈式自编码器实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法2"><span class="nav-text">算法2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法3"><span class="nav-text">算法3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型提取特征的效果和结果"><span class="nav-text">模型提取特征的效果和结果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-时间序列的预处理"><span class="nav-text">1.2 时间序列的预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-时间序列规范化"><span class="nav-text">1.2.1 时间序列规范化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-适合神经网络的时间序列子序列的片段向量矩阵"><span class="nav-text">1.2.2 适合神经网络的时间序列子序列的片段向量矩阵</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-栈式自编码器"><span class="nav-text">1.3 栈式自编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-motif的查找方法"><span class="nav-text">1.4 motif的查找方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据预处理的实现"><span class="nav-text">2.1 数据预处理的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法1"><span class="nav-text">算法1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-栈式自编码器实现"><span class="nav-text">2.2 栈式自编码器实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法2"><span class="nav-text">算法2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法3"><span class="nav-text">算法3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-原始方法找寻motif"><span class="nav-text">2.3 原始方法找寻motif</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法4"><span class="nav-text">算法4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-特征提取后找寻的motif"><span class="nav-text">2.4 特征提取后找寻的motif</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法5"><span class="nav-text">算法5</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验结果及分析"><span class="nav-text">实验结果及分析</span></a></li></ol></div>
             
 
           </div>
