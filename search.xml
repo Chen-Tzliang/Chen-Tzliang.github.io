@@ -14,6 +14,6 @@
   <entry>
     <title><![CDATA[Hello World]]></title>
     <url>%2F2019%2F07%2F10%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick Start Procedure dataProcess(filePath) Input:时间序列T Output:适合于神经网络的3维空间模型F，包含大小为k的向量组成矩阵 T$\leftarrow$getFile(filePath) t$\leftarrow$MaxMinScore(T) M$\leftarrow$TsSplitAndCombineMatrix(m,window) F$\leftarrow$MCombineSpace(k) return F Create a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
   </entry>
 </search>
