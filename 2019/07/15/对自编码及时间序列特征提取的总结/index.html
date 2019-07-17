@@ -117,7 +117,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.2.png">
-<meta property="og:updated_time" content="2019-07-17T06:40:08.499Z">
+<meta property="og:updated_time" content="2019-07-17T06:43:35.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对自编码及时间序列特征提取的总结">
 <meta name="twitter:description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
@@ -403,27 +403,17 @@
 <p>栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.2，首先用自动编码器训练原始数据$X$<sub>$i$</sub>，得到网络模型的参数$W$<sub>$1$</sub>,$b$<sub>$1$</sub>和原始数据的一阶特征表示$h$<sup>$1$</sup>，然后将一阶特征$h$<sup>$1$</sup>作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数$W$<sub>$2$</sub>,$b$<sub>$2$</sub>和二阶特征表示$h$<sup>$2$</sup>,训练过程中，保持其他层的参数不变。最后，当训练完成后，通过微调整个网络模型，以改善整个网络模型的学习效果。</p>
 <h2 id="栈式自编码器提取时间序列特征的方法"><a href="#栈式自编码器提取时间序列特征的方法" class="headerlink" title="栈式自编码器提取时间序列特征的方法"></a>栈式自编码器提取时间序列特征的方法</h2><h3 id="1-1-基本思路"><a href="#1-1-基本思路" class="headerlink" title="1.1 基本思路"></a>1.1 基本思路</h3><p>栈式自编码器广泛应用于无监督特征学习，本文将用于时间序列的特征提取。通过对上述栈式自动编码器的定义，我们可以将高维的时间序列转化为低维特征表示。我们先将时间序列切片然后转化为空间的一个向量，并用自动编码器提取低维特征。</p>
 <p>本文利用栈式自编码器的基本思想为：对于一个大规模高维的时间序列，我们将时间序列按子序列切分为大规模的小片段时间序列向量，对大规模时间序列片段向量组成的矩阵进行深层的学习，使用神经网络学习时间点$t$<sub>$i$</sub>，$t$<sub>$m$</sub>（$i$和$m$是时间序列的任意时刻）之间的关联，比如$t$<sub>$5$</sub>，$t$<sub>$10$</sub>在时间序列中的一种特殊的关联，完成这两个点之间的特征学习，进一步特征提取，去理解多个点之间的关联性,最终学习出这个时间序列的关联特征。经过网络的训练之后，我们能得到一个模型，这个模型的输入是一个高维的时间序列片段，输出是一个低维的时间序列特征向量。模型如下，输入是$T[j:j+m]$,输出是$S[i:i+l]$,其中$m&gt;l$。</p>
-<script type="math/tex; mode=display">S[i:i+l]=f(T[j:j+m])$$     (1)
+<p>$S[i:i+l]=f(T[j:j+m])$     (1)</p>
 <center>
 时间序列特征提取模型
 </center>
 
-自动编码器将时间序列的高维向量转化为低维向量，并且学习到的低维的特征向量包含了高维时间序列的本质特征，是原始时间序列的良好表示，也是原始时间序列的另一种特征表示，由此得到的特征向量可用于相似度计算以及motif的查找。算法流程分为3个步骤：首先，对时间序列进行预处理，对时间序列按一定的子序列长度进行切分，构建时间序列片段向量的空间模型，每个时间序列片段转化成空间中的一个向量。然后将这些高维的向量组成的矩阵输入到构建好的栈式自编码器中学习，经过逐层的抽象，提取不同抽象程度的低维特征向量。最后，利用传统的motif查找方法对抽取到的低维时间序列特征向量进行motif查找，验证原始方法找寻的motif与栈式特征提取后找寻motif的方法的准确度。
-
-### 1.2 时间序列的预处理
-
-#### 1.2.1 时间序列规范化
-
-数据的规范化包括归一化标准化正则化，是一个统称（也有人把标准化作为统称）。
-
-数据规范化是数据挖掘中的数据变换的一种方式，数据变换将数据变换或统一成适合于数据挖掘的形式，将被挖掘对象的属性数据按比例缩放，使其落入一个小的特定区间内，如[-1, 1]或[0, 1]。
-对属性值进行规范化常用于涉及神经网络和距离度量的分类算法和聚类算法当中。比如使用神经网络后向传播算法进行分类挖掘时，对训练元组中度量每个属性的输入值进行规范化有利于加快学习阶段的速度。对于基于距离度量相异度的方法，数据归一化能够让所有的属性具有相同的权值。
-
-数据规范化的常用方法有三种：最小最大值规范化，z-score标准化和按小数定标规范化。
-
-在本文中由于使用的是sigmoid函数输出的是$[0，1]$，且在对神经网络进行训练的时候，应当把输入的数据处理成适合于网络训练的数据，这里需要对原始的时间序列进行放缩，进行归一化的原因是把各个特征的尺度控制在相同的范围内，这样可以便于找到最优解。文章用的是最小最大值规范化，由于使用的是sigmoid函数，因此对时间序列进行最小最大值规范化，公式如下：
-
-$$x^*=\frac{x-max}{max-min}$$     (2)
+<p>自动编码器将时间序列的高维向量转化为低维向量，并且学习到的低维的特征向量包含了高维时间序列的本质特征，是原始时间序列的良好表示，也是原始时间序列的另一种特征表示，由此得到的特征向量可用于相似度计算以及motif的查找。算法流程分为3个步骤：首先，对时间序列进行预处理，对时间序列按一定的子序列长度进行切分，构建时间序列片段向量的空间模型，每个时间序列片段转化成空间中的一个向量。然后将这些高维的向量组成的矩阵输入到构建好的栈式自编码器中学习，经过逐层的抽象，提取不同抽象程度的低维特征向量。最后，利用传统的motif查找方法对抽取到的低维时间序列特征向量进行motif查找，验证原始方法找寻的motif与栈式特征提取后找寻motif的方法的准确度。</p>
+<h3 id="1-2-时间序列的预处理"><a href="#1-2-时间序列的预处理" class="headerlink" title="1.2 时间序列的预处理"></a>1.2 时间序列的预处理</h3><h4 id="1-2-1-时间序列规范化"><a href="#1-2-1-时间序列规范化" class="headerlink" title="1.2.1 时间序列规范化"></a>1.2.1 时间序列规范化</h4><p>数据的规范化包括归一化标准化正则化，是一个统称（也有人把标准化作为统称）。</p>
+<p>数据规范化是数据挖掘中的数据变换的一种方式，数据变换将数据变换或统一成适合于数据挖掘的形式，将被挖掘对象的属性数据按比例缩放，使其落入一个小的特定区间内，如[-1, 1]或[0, 1]。<br>对属性值进行规范化常用于涉及神经网络和距离度量的分类算法和聚类算法当中。比如使用神经网络后向传播算法进行分类挖掘时，对训练元组中度量每个属性的输入值进行规范化有利于加快学习阶段的速度。对于基于距离度量相异度的方法，数据归一化能够让所有的属性具有相同的权值。</p>
+<p>数据规范化的常用方法有三种：最小最大值规范化，z-score标准化和按小数定标规范化。</p>
+<p>在本文中由于使用的是sigmoid函数输出的是$[0，1]$，且在对神经网络进行训练的时候，应当把输入的数据处理成适合于网络训练的数据，这里需要对原始的时间序列进行放缩，进行归一化的原因是把各个特征的尺度控制在相同的范围内，这样可以便于找到最优解。文章用的是最小最大值规范化，由于使用的是sigmoid函数，因此对时间序列进行最小最大值规范化，公式如下：</p>
+<script type="math/tex; mode=display">x^*=\frac{x-max}{max-min}$$     (2)
 
 公式（2）是最小最大值规范化的公式，该规范化将时间序列数据进行缩放，使数据范围在区间[0，1]上,对时间序列的伸缩变换的目的是使其不同度量之间的特征具有可比性，同时不改变原始数据的分布。
 
@@ -477,7 +467,7 @@ $$d(x,y)= \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}= \sqrt{\sum_{i=1}^n(x_i
   <p><span>本文标题:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/">对自编码及时间序列特征提取的总结</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年07月15日 - 21:51</p>
-  <p><span>最后更新:</span>2019年07月17日 - 14:40</p>
+  <p><span>最后更新:</span>2019年07月17日 - 14:43</p>
   <p><span>原始链接:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/" title="对自编码及时间序列特征提取的总结">https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/" aria-label="复制成功！"></i></span>
   </p>
@@ -707,7 +697,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-时间序列的预处理"><span class="nav-text">1.2 时间序列的预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-时间序列规范化"><span class="nav-text">1.2.1 时间序列规范化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a></li></ol></div>
             
 
           </div>
