@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+<script>
+    (function () {
+        if ('czl080918sss') {
+            if (prompt('请输入文章密码') !== 'czl080918sss') {
+                alert('密码错误！');
+                if (history.length === 1) {
+                    location.replace("https://chen-tzliang.github.io/"); // 这里替换成你的首页
+                } else {
+                    history.back();
+                }
+            }
+        }
+    })();
+</script>
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/leader.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/leader.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="1,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
+<meta name="keywords" content="1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对自编码及时间序列特征提取的总结">
+<meta property="og:url" content="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/index.html">
+<meta property="og:site_name" content="Czl的博客">
+<meta property="og:description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.2.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.3.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/images/1.4.png">
+<meta property="og:updated_time" content="2019-07-17T17:41:27.689Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对自编码及时间序列特征提取的总结">
+<meta name="twitter:description" content="介绍时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。">
+<meta name="twitter:image" content="https://chen-tzliang.github.io/about/images/1.1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/">
+
+
+
+
+
+  <title>对自编码及时间序列特征提取的总结 | Czl的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Czl的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录技术之路及生活上的点点滴滴</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-首页">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-关于我">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-标签">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-分类">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-归档">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈紫良">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Czl的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">对自编码及时间序列特征提取的总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-15T21:51:25+08:00">
+                2019-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/1/" itemprop="url" rel="index">
+                    <span itemprop="name">1</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>时间序列是一种应用广、复杂、维度高的数据形式，是根据客观对象的某些物理量在时间维度上的采样值排列组成的数据序列，按一定的时间走势的数据类型，它客观地记录了所观测对象在各个单位时间点上的状态值。时间序列应用十分的广泛，金融数据，流媒体数据、气象数据、人口普查数据、系统日志数据都是时间序列数据类型。<a id="more"></a>而找寻相似的时间序列频繁模式在时间序列的挖掘中有相当重要的意义，例如，我们要找寻某一个股票的走势，或者对股票进行分析，我们需要找出这只股票的一些频繁的周期，也叫motif查询，就是找出股票中走势相似的某些时间序列片段，那么，我们要找寻这些片段就需要用到距离测量的算法，例如欧式距离，相关系数距离等，然后通过距离阀值找到小于某个阀值的片段。在找寻这些片段时可能要花费大量的时间，这时我们就需要到一些降维的技术来缩短，本文所讨论的是单变量的时间序列，在传统的方法中，我们有paa分段技术，符号化sax，主成分分析法pca等等，这些都是传统的降维方法，本文通过大量文章的阅读，提出了用自编码器研究时间序列特征提取，并大量实验测量降维后的特征向量是否保持原有的时间序列的特征。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>motif查找或者进行时间序列片段的相似度计算的时候，降低时间序列的维度对于分析时间序列有着极其重要的作用，时间序列的特征提取能很大限度的减少时间序列距离测量的时间，因此，我们指在研究自编码器对时间序列的特征提取。栈式自编码器特征提取是指利用栈式自编码器对时间序列特征进行提取，对于高维的时间序列的片段，我们通过训练栈式自编码器，使该神经网络能够从输入的时间序列片段中得到一个低维的特征向量的输出，再次，我们利用该低维的特征向量完成motif的查找，并通过特征提取减少通过高维暴力计算找寻motif的时间。最后，通过进行大量实验验证特征提取后的阀值与原始阀值的近似关系。</p>
+<h3 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h3><p><strong>时间序列定义</strong>：时间序列T是按时间顺序排列的数据点序列。$T=$[($t$<sub>$1$</sub>,$d$<sub>$1$</sub>),($t$<sub>$2$</sub>,$d$<sub>$2$</sub>),…,($t$<sub>$n$</sub>,$d$<sub>$n$</sub>)],其中d是时间$t$的数据项，$n$是时间序列的长度。</p>
+<p><strong>时间子序列定义</strong>：子序列$T[j:j+m]$ = [$d$<sub>$j$</sub>,$d$<sub>$j+1$</sub>,…,$d$<sub>$j+m$</sub>]是从位置$j$开始，长度为$m$的$T$中的一组连续点，本文只考虑时间序列的数据值。</p>
+<p><strong>时间序列motif定义</strong>：Motif被描述为重复的模式、频繁的趋势、近似重复的序列、形状、事件或频繁的子序列，所有这些都有相同的目标。Motif旨在发现子序列匹配数量最多的片段，通过提前定义的阀值$\varepsilon$，当所找的子序列片段之间的距离小于$\varepsilon$，就认为这些子序列片段为一个motif，如图1.1。</p>
+<center>
+<img src="https://chen-tzliang.github.io/about/images/1.1.png" width="70%" height="10%">
+<br>
+图1.1 时间序列的两个频繁模式，红色和绿色为一个Motif
+</center>
+
+<p><strong>栈式自编码器(SAE)定义</strong>：是一种无监督性的机器学习算法，其模型结构简单，只具有一个隐含层，网络层神经元之间是全连接的结构，如图1.2所示。研究者们对经典的自动编码器进行了很多优化的研究，提出了多种自动编码器的改良版本，如对原始自动编码器中隐含层的神经单元加以稀疏性的限制，这种网络被称为稀疏自动编码器。将经典的自动编码器进行叠加组合，则构成了栈式自动编码器。<!--more--></p>
+<center>
+<img src="https://chen-tzliang.github.io/about/images/1.2.png" width="30%" height="10%">
+<br>
+图1.1 自动编码器网络示意图
+</center>
+
+<p>栈式自动编码器是自动编码器的改进模型，由自动编码器的有效堆叠组合构成。网络模型对数据特征进行逐层的抽象提取，前一层自动编码器的输出(隐含层)结果将用于后一层自动编码器网络的输入，然后将自动编码器的编码部分进行叠加，然后叠加对应的编码部分。栈式自动编码器逐层对网络模型进行训练，每次对一个网络层以贪婪的思想进行训练，训练的算法为无监督的稀疏自动编码器。训练的过程参见图1.2，首先用自动编码器训练原始数据$X$<sub>$i$</sub>，得到网络模型的参数$W$<sub>$1$</sub>,$b$<sub>$1$</sub>和原始数据的一阶特征表示$h$<sup>$1$</sup>，然后将一阶特征$h$<sup>$1$</sup>作为下一个自动编码器网络的输入，训练得到第二个自动编码器的参数$W$<sub>$2$</sub>,$b$<sub>$2$</sub>和二阶特征表示$h$<sup>$2$</sup>,训练过程中，保持其他层的参数不变。最后，当训练完成后，通过微调整个网络模型，以改善整个网络模型的学习效果。</p>
+<h2 id="栈式自编码器提取时间序列特征的方法"><a href="#栈式自编码器提取时间序列特征的方法" class="headerlink" title="栈式自编码器提取时间序列特征的方法"></a>栈式自编码器提取时间序列特征的方法</h2><h3 id="1-1-基本思路"><a href="#1-1-基本思路" class="headerlink" title="1.1 基本思路"></a>1.1 基本思路</h3><p>栈式自编码器广泛应用于无监督特征学习，本文将用于时间序列的特征提取。通过对上述栈式自动编码器的定义，我们可以将高维的时间序列转化为低维特征表示。我们先将时间序列切片然后转化为空间的一个向量，并用自动编码器提取低维特征。</p>
+<p>本文利用栈式自编码器的基本思想为：对于一个大规模高维的时间序列，我们将时间序列按子序列切分为大规模的小片段时间序列向量，对大规模时间序列片段向量组成的矩阵进行深层的学习，使用神经网络学习时间点$t$<sub>$i$</sub>，$t$<sub>$m$</sub>（$i$和$m$是时间序列的任意时刻）之间的关联，比如$t$<sub>$5$</sub>，$t$<sub>$10$</sub>在时间序列中的一种特殊的关联，完成这两个点之间的特征学习，进一步特征提取，去理解多个点之间的关联性,最终学习出这个时间序列的关联特征。经过网络的训练之后，我们能得到一个模型，这个模型的输入是一个高维的时间序列片段，输出是一个低维的时间序列特征向量。模型如下，输入是$T[j:j+m]$,输出是$S[i:i+l]$,其中$m&gt;l$。</p>
+<p>$S[i:i+l]=f(T[j:j+m])$     (1)</p>
+<center>
+时间序列特征提取模型
+</center>
+
+<p>自动编码器将时间序列的高维向量转化为低维向量，并且学习到的低维的特征向量包含了高维时间序列的本质特征，是原始时间序列的良好表示，也是原始时间序列的另一种特征表示，由此得到的特征向量可用于相似度计算以及motif的查找。算法流程分为3个步骤：首先，对时间序列进行预处理，对时间序列按一定的子序列长度进行切分，构建时间序列片段向量的空间模型，每个时间序列片段转化成空间中的一个向量。然后将这些高维的向量组成的矩阵输入到构建好的栈式自编码器中学习，经过逐层的抽象，提取不同抽象程度的低维特征向量。最后，利用传统的motif查找方法对抽取到的低维时间序列特征向量进行motif查找，验证原始方法找寻的motif与栈式特征提取后找寻motif的方法的准确度。</p>
+<h3 id="1-2-时间序列的预处理"><a href="#1-2-时间序列的预处理" class="headerlink" title="1.2 时间序列的预处理"></a>1.2 时间序列的预处理</h3><h4 id="1-2-1-时间序列规范化"><a href="#1-2-1-时间序列规范化" class="headerlink" title="1.2.1 时间序列规范化"></a>1.2.1 时间序列规范化</h4><p>数据的规范化包括归一化标准化正则化，是一个统称（也有人把标准化作为统称）。</p>
+<p>数据规范化是数据挖掘中的数据变换的一种方式，数据变换将数据变换或统一成适合于数据挖掘的形式，将被挖掘对象的属性数据按比例缩放，使其落入一个小的特定区间内，如[-1, 1]或[0, 1]。<br>对属性值进行规范化常用于涉及神经网络和距离度量的分类算法和聚类算法当中。比如使用神经网络后向传播算法进行分类挖掘时，对训练元组中度量每个属性的输入值进行规范化有利于加快学习阶段的速度。对于基于距离度量相异度的方法，数据归一化能够让所有的属性具有相同的权值。</p>
+<p>数据规范化的常用方法有三种：最小最大值规范化，z-score标准化和按小数定标规范化。</p>
+<p>在本文中由于使用的是sigmoid函数输出的是$[0，1]$，且在对神经网络进行训练的时候，应当把输入的数据处理成适合于网络训练的数据，这里需要对原始的时间序列进行放缩，进行归一化的原因是把各个特征的尺度控制在相同的范围内，这样可以便于找到最优解。文章用的是最小最大值规范化，由于使用的是sigmoid函数，因此对时间序列进行最小最大值规范化，公式如下：</p>
+<p>$x^*=\frac{x-max}{max-min}$     (2)</p>
+<p>公式（2）是最小最大值规范化的公式，该规范化将时间序列数据进行缩放，使数据范围在区间[0，1]上,对时间序列的伸缩变换的目的是使其不同度量之间的特征具有可比性，同时不改变原始数据的分布。</p>
+<h4 id="1-2-2-适合神经网络的时间序列子序列的片段向量矩阵"><a href="#1-2-2-适合神经网络的时间序列子序列的片段向量矩阵" class="headerlink" title="1.2.2 适合神经网络的时间序列子序列的片段向量矩阵"></a>1.2.2 适合神经网络的时间序列子序列的片段向量矩阵</h4><p>公式（2）已经对时间序列数据进行了最小最大值规范化，但是这样的时间序列数据并不能适合于我们的自编码器神经网络的训练，因此我们还需要对数据进行处理，使构建的时间序列数据集适合于自编码器的训练。对时间序列的特征提取，或者说是motif查找时都是研究的时间序列的子序列，因此，我们在用栈式自编码器进行特征提取时，操作的应该是子序列，为了减少过拟合的问题，我们在截取时间序列片段时用了滑动窗口，大小是64，子序列片段设置为256，因此我们对一个完整的大的时间序列进行片段的切分，每256维构建一个向量空间模型，滑动窗口是64，就是每滑动64个维度进行一个向量模型的截取，最后这些截取的向量空间模型构成一个向量矩阵作为自编码器的训练数据集。</p>
+<h3 id="1-3-栈式自编码器"><a href="#1-3-栈式自编码器" class="headerlink" title="1.3 栈式自编码器"></a>1.3 栈式自编码器</h3><p>栈式自编码器是一种多层的前传神经网络，可以用来对数据进行特征提取，同样也可以用于时间序列的特征提取，自编码器已经广泛运用于深度学习中，在进行时间序列特征提取时，本文使用了1个输入层、2个隐含层以及一个输出层组成的神经网络。以第一个隐含层为例，输入是一个256维的时间序列子片段向量$x$，输出层设置为128维的向量$z$，该一层$z$是自编码器降维后的特征向量，然后输出层是根据特征向量自编码器重构的256维向量$\hat{x}$，该隐藏层和输出层的激活情况公式为</p>
+<p>$z=sigmoid(Wx+b)$              (3)</p>
+<p>$\hat{x}=sigmoid(W^Ty+b^‘)$    (4)</p>
+<p>其中，$sigmoid(x)=1/(1-e^{-x})$为Sigmoid函数，其中$W$是自编码器的权重矩阵，$W^T$是解码器的权重矩阵，$b$和$b^‘$是偏置量。</p>
+<p>作为无监督学习，自动编码器与监督学习不同，自动编码器的目标是输出层尽量重构输入层的状态，理想的情况下，隐藏层的特征能正确重构一个完全相同的输入层的时间序列片段，所以说隐藏层所得的特征向量即为原始时间序列的良好表示，但是重构不能保证100%的正确率，因此隐藏层作为提取的特征向量还是存在有一点误差，该误差来源于重构误差，训练时要使编码器尽可能减少重构误差。所以，自编码器重构的目标函数可以得出，公式为</p>
+<p>$\left{ W,b,W^T,b^‘ \right}=argmin\,Loss(x,\hat{x})=||x-\hat{x}||^2$                         (5)</p>
+<p>其中，$Loss(x,\hat{x})$是损失函数，也叫重构误差，它的作用是衡量最后输出层与输入层重构的情况，我们自编码器要找寻的就是该误差的最小值。</p>
+<p>隐藏层$z$的维度是小于输入层$x$的维度的，所以隐藏层$z$可以学习到输入样本的低维表示，并且通过解码能够包含与高维表示相同的信息。使用没有标注的数据集$X$，进行自动编码的无监督学习，最后对于任何输入向量$x$，通过训练好的模型进行计算，得到隐藏层向量$z$,即输入向量的一个低维编码。</p>
+<p>自动编码器的权重训练采用随机梯度下降算法，使用公式为</p>
+<p>$W\leftarrow W-\eta\frac{\partial Loss(X,\hat{X})}{\partial W}$       (6)</p>
+<p>该公式是梯度下降公式，用来更新权重矩阵，其中:$\eta$为更新的步长；其他参数$b,W^T,b^‘$采用相同的方式更新。本文更新的步长设置为0.001。</p>
+<h3 id="1-4-motif的查找方法"><a href="#1-4-motif的查找方法" class="headerlink" title="1.4 motif的查找方法"></a>1.4 motif的查找方法</h3><p>通过大量文章的阅读，发现前人在motif的找寻中提供了大量的方法，为了方便进行结果的分析和比较，本文选用了一种思路就是matrix profile的方式，该方法是想计算出所有的距离然后形成的矩阵，例如，有一个时间序列T,T<sub>0</sub>是长度为m，起始位置为0的T的子序列，当用该T<sub>0</sub>与时间序列T中的所有子序列段作比较时，能得出一个距离向量d<sub>0</sub>;同理可得子序列段T<sub>1</sub>,T<sub>2</sub>,…,T<sub>n-m+1</sub>的距离向量d<sub>1</sub>,d<sub>2</sub>,…,d<sub>n-m+1</sub>;这些距离向量共同构成了一个矩阵D。该矩阵保留了所有子序列之间的关系，我们要查询子序列之间的关系时，只需要通过矩阵的下标值就能得到相应子序列段的距离，例如:矩阵D[3][10]的元素值，即为T<sub>3</sub>与T<sub>10</sub>两个子序列片段的欧几里得距离，欧式公式为</p>
+<p><script type="math/tex">d(x,y)= \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+...+(x_n-y_n)^2}= \sqrt{\sum_{i=1}^n(x_i-y_i)^2}</script>            (7)</p>
+<p>欧式公式是度量两个子序列之间的距离的，当距离越小时，代表两个片段越相似，同理，当距离越大时，两个片段越不相似。</p>
+<h2 id="栈式自编码器提取时间序列特征实现"><a href="#栈式自编码器提取时间序列特征实现" class="headerlink" title="栈式自编码器提取时间序列特征实现"></a>栈式自编码器提取时间序列特征实现</h2><h3 id="2-1-数据预处理的实现"><a href="#2-1-数据预处理的实现" class="headerlink" title="2.1 数据预处理的实现"></a>2.1 数据预处理的实现</h3><p>在这一步中我们着重构建一个适合于神经网络学习的数据集，构建一个适合于神经网络输入的向量矩阵，我们的目标是特征提取，当然我们不能直接输入整个时间序列，全部一次性进行特征提取，因此我们从子序列入手，在这一步，我们先读取准备好的时间序列文本。该数据集含有40m，初步估计有几百万个时间点数据。预处理的第一步是进行最小值最大值规范化，之后按长度m为256，滑动窗口window为64进行切分该时间序列T，切分后的时间序列应该是一个个长为256的子序列片段，T<sub>0</sub>,T<sub>64</sub>,…，然后按每k个样本进行合成矩阵，之后把这些矩阵合并成一个3维的空间模型F，这就完成了数据集的整理，流程如算法1</p>
+<h4 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h4><hr>
+<p><strong>Procedure</strong> dataProcess(filePath)</p>
+<p><strong>Input</strong>:时间序列T</p>
+<p><strong>Output</strong>:适合于神经网络的3维空间模型F，包含大小为k的向量组成矩阵</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>t $\leftarrow$ MaxMinScore(T)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>F $\leftarrow$ MCombineSpace(k)</p>
+<p>return F</p>
+<hr>
+<p>对于算法1，我们最终得到的是一个3维的空间模型，getFile()函数可以读取时间序列文件返回原始时间序列，MaxMinScore()对时间序列进行最小值最大值规范化处理。TsSplitAndCombineMatrix()中的m是指子序列的片段大小，window是指滑动窗口大小，该方法返回的是以子序列向量组成的向量矩阵。MCombineSpace()中的k是每个合成矩阵的大小，返回的F是合成矩阵的集合。该空间模型也是神经网络的输入数据集。</p>
+<h3 id="2-2-栈式自编码器实现"><a href="#2-2-栈式自编码器实现" class="headerlink" title="2.2 栈式自编码器实现"></a>2.2 栈式自编码器实现</h3><p>栈式自编码器的实现是本文的核心的步骤，首先我们的目标是输入一个256维的时间序列子片段，通过该栈式自编码器能够提取相应的特征向量。我们得设置一些神经网络的参数，在实现过程中，我们设置一个输入层，两个隐藏层，一个输出层，该栈式自编码网络提取的特征向量是第二个隐藏层，我们的输入层设置为256，第一个隐藏层的输出设置为128，然后激活函数用的是sigmoid()函数。</p>
+<p>因此，第一层输入为X，第一层自编码器权重矩阵W1_e应该是[256,128]，相应的第一层的解码器权重矩阵W1_d应该是[128,256],第一层的偏置量b1_e应该是[128],第一层的解码器偏置量b1_d应该是[256]，第一层的输出为Z1，根据公式(3)(4)原理实现第一层，根据公式(5)来编写这一层的重构误差，利用BP梯度下降公式(6)进行这一层的网络学习训练，具体的算法2如下</p>
+<h4 id="算法2"><a href="#算法2" class="headerlink" title="算法2"></a>算法2</h4><hr>
+<p><strong>Procedure</strong> firstHidden(F)</p>
+<p><strong>Input</strong>:W1_e，W1_d，b1_e，b1_d</p>
+<p><strong>Output</strong>:训练得到的第一层编码器的权重矩阵和偏置量<br>（W1_e，W1_d，b1_e，b1_d）</p>
+<p>(W1_e，W1_d，b1_e，b1_d)$\leftarrow$ WeightInitialization(W1_e，W1_d，b1_e，b1_d)</p>
+<p>for each $X_i$ in F:<br>{</p>
+<p>Z1 $\leftarrow$ Encoder1(W1_e,b1_e,$X_i$)</p>
+<p>$\hat{X_i}$ $\leftarrow$ Decoder1(W1_d,b1_d,Z1)</p>
+<p>loss=caluteLoss($X_i$,$\hat{X_i}$)</p>
+<p>updateWeightBylearn()</p>
+<p>}</p>
+<p>return W1_e，W1_d，b1_e，b1_d</p>
+<hr>
+<p>上述的算法2中WeightInitialization()函数是对W1_e，W1_d，b1_e，b1_d这些值初始化并根据均值为0,方差为0.01给这些权重初始值，Encoder()函数是编码器实现了公式(3)，返回的是输入的特征提取后的特征向量。Decoder()函数是解码器实现了公式(4)，返回的是特征向量重构的输入时间序列片段，caluteLoss()函数实现了公式(5)重构误差的计算，updateWeightBylearn()通过BP梯度下降公式(6)更新权重。算法2返回了一些训练好的权重参数可用于第二层的训练。</p>
+<p>第二层隐藏层的输入来源于第一层隐藏层的输出，第二层的输入为Z1，由第一层的自编码器得到。同理，第二层的自编码器权重矩阵W2_e应该是[128,64]，相应的第二层的解码器是[64，128],第一层的偏置量b2_e应该是[64],第一层的解码器偏置量b2_d应该是[128]，第一层的输出为Z2，根据公式(3)(4)原理实现第二层，根据公式(5)来编写这一层的重构误差，利用BP梯度下降公式(6)进行这一层的网络学习训练，具体的算法3如下</p>
+<h4 id="算法3"><a href="#算法3" class="headerlink" title="算法3"></a>算法3</h4><hr>
+<p><strong>Procedure</strong> secondHidden(W1_e,b1_e,F)</p>
+<p><strong>Input</strong>:W1_e，b1_e,F,W2_e，W2_d，b2_e，b2_d</p>
+<p><strong>Output</strong>:训练得到model</p>
+<p>(W2_e，W2_d，b2_e，b2_d)$\leftarrow$ WeightInitialization(W2_e，W2_d，b2_e，b2_d)</p>
+<p>for each $X_i$ in F:<br>{</p>
+<p>$Z1$ $\leftarrow$ Encoder1(W1_e,b1_e,$X_i$)</p>
+<p>$Z2$ $\leftarrow$ Encoder2(W2_e,b2_e,$Z1$)</p>
+<p>$\hat{Z1}$ $\leftarrow$ Decoder2(W1_d,b1_d,$Z2$)</p>
+<p>loss=caluteLoss($Z1$,$\hat{Z1}$)</p>
+<p>updateWeightBylearn()</p>
+<p>}</p>
+<p>model $\leftarrow$ saveModel()</p>
+<p>return model</p>
+<hr>
+<p>上述算法3WeightInitialization()函数也是初始化第二层的权重，Z1是第一层隐藏层的编码，第二层是对第一层的重复利用，只不过输入的是第一层的编码，重构的是第一层的编码，同样该层也是运用BP梯度下降来更新权重，在训练完成后，我们需要通过saveModel()函数将模型保存下来。</p>
+<p>通过算法1、2、3，我们已经完成了神经网络的训练，最终我们得到一个模型，该模型的功能如公式(1),其中m是256，l是64，所以当我们输入一个时间序列的子序列长度为256时，我们能通过模型直接得到64维的自编码器提取后的特征向量，至此神经网络的训练基本上完成，以下是验证该网络的效果和准确率。</p>
+<h3 id="2-3-原始方法找寻motif"><a href="#2-3-原始方法找寻motif" class="headerlink" title="2.3 原始方法找寻motif"></a>2.3 原始方法找寻motif</h3><p>原始方法暴力求解距离矩阵可以找到正确的motif，这里我们的原始方法同样用的是欧式距离，当然我们也可以用相关系数的方法来找出motif，但是这里我们采用的是欧式距离，因为我们仅仅用来检测神经网络的降维效果。为了简单起见，我们用的测试数据点大约是60000个点，为了避免重复计算，我们建立滑动窗口，大小同样为64，所谓的暴力算法，就是使用循环来找寻这个距离矩阵，具体的原理可以参考上述1.4motif的查找方法，最后我们给原始方法设置一个阀值$\varepsilon$，例如，当我们找到矩阵中小于$\varepsilon$的值是D[3][10],矩阵的下标是记录的起始位置，当然这个位置得乘上滑动窗口，D[3][10]代表的是T[3 <em> 64:3 </em> 64+256]跟T[10 <em> 64:10 </em> 64+256]的两个子序列的距离，因为它们之间的距离小于$\varepsilon$，因此这两个子序列片段为一个motif。原始方法找寻motif的方法如算法4</p>
+<h4 id="算法4"><a href="#算法4" class="headerlink" title="算法4"></a>算法4</h4><hr>
+<p><strong>Procedure</strong> findMotif(filePath)</p>
+<p><strong>Input</strong>:时间序列T</p>
+<p><strong>Output</strong>:motif</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>for i in range(0,len(M)){</p>
+<p>for j in range(i,len(M)){</p>
+<p>dist $\leftarrow$ calculateEd(M[i],M[j])</p>
+<p>D[i][j] $\leftarrow$ dist</p>
+<p>}</p>
+<p>}</p>
+<p>motif $\leftarrow$ lessThanVarepsilon(D)</p>
+<p>return motif</p>
+<hr>
+<p>上述算法是原始找寻motif的方法，T是读取文件得到的时间序列，M是以大小为256对时间序列进行切分，滑动窗口为64的向量矩阵，矩阵的第一行就是以0开始的大小为256的子序列，第二行是64开始的，长度为256的第二个子序列，依次下去。calculateEd()函数计算的是两个子序列的欧几里得距离，D是所有子序列之间的距离矩阵，lessThanVarepsilon()是找出距离矩阵D中小于阀值$\varepsilon$的值，即为motif。</p>
+<h3 id="2-4-特征提取后找寻的motif"><a href="#2-4-特征提取后找寻的motif" class="headerlink" title="2.4 特征提取后找寻的motif"></a>2.4 特征提取后找寻的motif</h3><p>特征提取找寻motif只需在中间添加一个步骤就是神经网络提取特征的那一个步骤,把上面的算法加以改进就是神经网络降维找寻motif的方法了，如算法5</p>
+<h4 id="算法5"><a href="#算法5" class="headerlink" title="算法5"></a>算法5</h4><hr>
+<p><strong>Procedure</strong> findMotif(filePath)</p>
+<p><strong>Input</strong>:时间序列T</p>
+<p><strong>Output</strong>:motif</p>
+<p>T $\leftarrow$ getFile(filePath)</p>
+<p>M $\leftarrow$ TsSplitAndCombineMatrix(m,window,T)</p>
+<p>for i in range(0,len(M)){</p>
+<p>for j in range(i,len(M)){</p>
+<p>S1 $\leftarrow$ model(M[i])</p>
+<p>S2 $\leftarrow$ model(M[j])</p>
+<p>dist $\leftarrow$ calculateEd(S1,S2)</p>
+<p>D[i][j] $\leftarrow$ dist</p>
+<p>}</p>
+<p>}</p>
+<p>motif $\leftarrow$ lessThanVarepsilon(D)</p>
+<p>return motif</p>
+<hr>
+<p>上述算法添加了特征提取的model()那个步骤，目的是验证看神经网络进行特征提取之后特征向量跟原始时间序列是否保持原有的特征，也想通过代码验证这种自编码的方法在实现特征提取是否为原始序列的另一种良好表述。</p>
+<h2 id="实验结果及分析"><a href="#实验结果及分析" class="headerlink" title="实验结果及分析"></a>实验结果及分析</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>我们的实验采用的是macos系统，神经网络的编写用的是tensorflow，TensorFlow™是一个基于数据流编程（dataflow programming）的符号数学系统，被广泛应用于各类机器学习（machine learning），算法的编程实现编译工具是pycharm，是一个主流的编译工具，编写的语言是python，该语言简练，简洁。</p>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>实验时，我们采用的数据集是一个带有40m的文本文件，保守估计该数据集的数据点有几百万个。当然神经网络训练的数据集是通过该文本处理得到的，预处理的方法可参考算法1。其中我们提取该时间序列的前69000个数据点作为测试数据集。</p>
+<h3 id="验证神经网络所找的motif的准确性"><a href="#验证神经网络所找的motif的准确性" class="headerlink" title="验证神经网络所找的motif的准确性"></a>验证神经网络所找的motif的准确性</h3><p>由于通过神经网络特征提取后阀值的选取不能跟原始序列保持一致性，故我们在进行神经网络进行时应该先得出距离矩阵，通过算法1、2、3，我们训练好神经网络模型，通过各种参数的尝试，得到了一个效果最好的模型，该模型训练时步长为0.001，权重的初始值是服从正态分布的，均值为0，方差为0.01，k的值为20。输入层为256，第一个隐藏层输出是128，第二个是64。滑动窗口设置为64。由于通过神经网络特征向量之间的欧式距离变得相当小，我们通过观察距离矩阵找到阀值$\varepsilon$，然后以这个阀值$\varepsilon$为标准找相应的motif，其中的motif结果如下</p>
+<p><center>
+<img src="https://chen-tzliang.github.io/about/images/1.3.png" width="70%" height="10%">
+</center></p>
+<p><center>
+图1.3 自编码器特征提取后找到的motif1
+</center></p>
+<p><center>
+<img src="https://chen-tzliang.github.io/about/images/1.4.png" width="70%" height="10%">
+</center></p>
+<p><center>
+图1.4 自编码器特征提取后找到的motif2
+</center><br>上述第一个motif是通过神经网络进行降维后找到的，我们的算法找到的motif的两个片段的起始位置分别是（64 6144）（64 15168）（64 15232）（64 15552），第二个motif的（192 256）（192 1216）（192 1280），尽管所截取的motif带有相邻的片段，但是也不影响我们神经网络特征的结果是准确的，至少这种方法进行特征提取后并没有丢失原始时间序列的本质特征，即神经网络降维后的特征向量是原来序列的良好表示。</p>
+<h3 id="验证神经网络的准确率"><a href="#验证神经网络的准确率" class="headerlink" title="验证神经网络的准确率"></a>验证神经网络的准确率</h3><p>上面我们提到通过神经网络特征提取后阀值的选取不能跟原始序列保持一致性，那么我们怎么才能进行准确率的估计呢？我们可以从原始方法得到的距离矩阵和神经网络得到的距离矩阵入手，在进行算法4我们可以得到原始方法得到的距离矩阵，同理算法5我们可以得到神经网络哦的距离矩阵。但是这两个矩阵中的值大不相同，当然阀值是不能同步的，那什么样的方法能保证大家取的相似度一致呢，我们可以对两个距离矩阵进行归一化，把范围规定为[0,1]之间，然后我们找两个矩阵归一化后阀值小于0.2的值，这样，我们就能保持一致性，那么设N是原始方法找到的motif个数，n是和原始方法找到的motif相同的值。则我们的准确率</p>
+<p>$p=\frac{n}{N}*100\%$（8）</p>
+<p>通过实验结果，我们得到的n是7100，N是7536，故得到对69000个点进行实验，实验的准确率为94%。</p>
+<h3 id="大量实验找寻原始阀值和特征向量阀值关系"><a href="#大量实验找寻原始阀值和特征向量阀值关系" class="headerlink" title="大量实验找寻原始阀值和特征向量阀值关系"></a>大量实验找寻原始阀值和特征向量阀值关系</h3><p>本文一个难点就是要找寻原始时间序列子序列片段之间的距离与特征向量之间的阀值的关系，我们都知道神经网络是一个黑盒子，要找寻特征向量与原始时间序列的关系是很难实现的，由于神经网络权重的设置是没有意义的，权重矩阵的每一个权重都是没有意义的，不像物理中的一些参数带有实际意义，因此要找寻改变后的关系是很难的，但是我们能通过实验大概得出原始的时间序列片段间距离与特征向量间距离的关系，要找寻这样的关系需要进行大量的实验。实验中，我们每次增大测试数据的点数，每次增加1000，增加20次，每一次得到原始方法的距离矩阵和特征向量的距离矩阵。将原始方法距离矩阵的里的值除以特征向量的距离矩阵相应位置的值，最后求这些值的平均值，重复20次，得到20个值，再求这20个值的均值，最后得到一个参数e=1696。我们设X<sub>i</sub>，X<sub>j</sub>为原始序列的两个子片段，他们的欧式距离定义为d(X<sub>i</sub>，X<sub>j</sub>),通过神经网络特征提取后他们的特征向量分别为x<sub>i</sub>，x<sub>j</sub>，他们的欧式距离定义为d(x<sub>i</sub>，x<sub>j</sub>)。则这两个欧式距离的关系可近似认为</p>
+<p><script type="math/tex">d(X_i，X_j)=d(x_i,x_j)*e</script>（9）</p>
+<p>之后通过实验，我们设置原始方法的阀值为4，然后找到的motif个数为5633，然后再特征向量的距离矩阵中我们把里面的值同时乘以e，同样找寻阀值小于4的4795。然后通过公式（8）计算得到准确率为85%。这个得到的准确率的误差有两个，一个是在神经网络训练时我们在重构原始数据时会有一定的重构误差，另一种情况就是我们所找的关系e中所产生的误差，真正的e不是一个确定的值，它是一个变动的值，单单取均值不能保证真正的关系。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>利用自编码器进行时间序列的特征踢是一种新的降维的方法，它给研究者在研究motif时提供了一种新的思路，人工智能，深度学习作用越来越广泛。本文所提出的方法还需要作很多的改进，该自编码的方法还能应用于很多领域，还有待探索研究。</p>
+
+      
+    </div>
+    
+    
+    
+    
+    
+    
+      <div>
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/">对自编码及时间序列特征提取的总结</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
+  <p><span>发布时间:</span>2019年07月15日 - 21:51</p>
+  <p><span>最后更新:</span>2019年07月18日 - 01:41</p>
+  <p><span>原始链接:</span><a href="/2019/07/15/对自编码及时间序列特征提取的总结/" title="对自编码及时间序列特征提取的总结">https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/15/对自编码及时间序列特征提取的总结/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+  });
+    });  
+</script>
+
+      </div>
+           
+    
+    <div>
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+    </div>      
+    
+    
+    
+
+    
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/1/" rel="tag"><i class="fa fa-tag"></i>1</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/17/hadoop-1/" rel="prev" title="大数据处理平台Hadoop">
+                大数据处理平台Hadoop <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.jpg" alt="陈紫良">
+            
+              <p class="site-author-name" itemprop="name">陈紫良</p>
+              <p class="site-description motion-element" itemprop="description">一只脱缰的哈士奇</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Chen-Tzliang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-text">定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-text">问题定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义"><span class="nav-text">基本定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征的方法"><span class="nav-text">栈式自编码器提取时间序列特征的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-基本思路"><span class="nav-text">1.1 基本思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-时间序列的预处理"><span class="nav-text">1.2 时间序列的预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-时间序列规范化"><span class="nav-text">1.2.1 时间序列规范化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-适合神经网络的时间序列子序列的片段向量矩阵"><span class="nav-text">1.2.2 适合神经网络的时间序列子序列的片段向量矩阵</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-栈式自编码器"><span class="nav-text">1.3 栈式自编码器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-motif的查找方法"><span class="nav-text">1.4 motif的查找方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式自编码器提取时间序列特征实现"><span class="nav-text">栈式自编码器提取时间序列特征实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据预处理的实现"><span class="nav-text">2.1 数据预处理的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法1"><span class="nav-text">算法1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-栈式自编码器实现"><span class="nav-text">2.2 栈式自编码器实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法2"><span class="nav-text">算法2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#算法3"><span class="nav-text">算法3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-原始方法找寻motif"><span class="nav-text">2.3 原始方法找寻motif</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法4"><span class="nav-text">算法4</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-特征提取后找寻的motif"><span class="nav-text">2.4 特征提取后找寻的motif</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法5"><span class="nav-text">算法5</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验结果及分析"><span class="nav-text">实验结果及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实验环境"><span class="nav-text">实验环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集"><span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证神经网络所找的motif的准确性"><span class="nav-text">验证神经网络所找的motif的准确性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证神经网络的准确率"><span class="nav-text">验证神经网络的准确率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大量实验找寻原始阀值和特征向量阀值关系"><span class="nav-text">大量实验找寻原始阀值和特征向量阀值关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">陈紫良</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false});</script></body>
+<!-- 页面点击小红心 -->
+    
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
+</html>
