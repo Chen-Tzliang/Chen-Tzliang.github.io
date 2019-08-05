@@ -107,13 +107,13 @@
 
 
 
-<meta name="description" content="搜索微信公众号:’AI-ming3526’或者’计算机视觉这件小事’ 获取更多机器学习干货github：https://github.com/aimi-cn/AILearners   本文参考地址：[apachecn/AiLearning] 本文出现的所有代码，均可在github上下载，不妨来个Star把谢谢~：Github代码地址 大数据处理平台Hadoop（二）Hadoop节点的准备通过上一">
+<meta name="description" content="大数据处理平台Hadoop（二）Hadoop节点的准备通过上一章的学习和理解，相信读者朋友们和我一样已经理解了hadoop的发展和hadoop是个什么平台，hadoop的核心是hdfs分布式文件系统和mapreduce。但是，我们要使用分布式文件系统(HDFS)和mapreduce的时候必须进行环境的搭建，在进行hadoop的配置时，由于涉及的是分布式，因此我们需要多台机器的协助，虽然我们不能同">
 <meta name="keywords" content="hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据处理平台Hadoop（二）">
 <meta property="og:url" content="https://chen-tzliang.github.io/2019/07/24/hadoop-2/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="搜索微信公众号:’AI-ming3526’或者’计算机视觉这件小事’ 获取更多机器学习干货github：https://github.com/aimi-cn/AILearners   本文参考地址：[apachecn/AiLearning] 本文出现的所有代码，均可在github上下载，不妨来个Star把谢谢~：Github代码地址 大数据处理平台Hadoop（二）Hadoop节点的准备通过上一">
+<meta property="og:description" content="大数据处理平台Hadoop（二）Hadoop节点的准备通过上一章的学习和理解，相信读者朋友们和我一样已经理解了hadoop的发展和hadoop是个什么平台，hadoop的核心是hdfs分布式文件系统和mapreduce。但是，我们要使用分布式文件系统(HDFS)和mapreduce的时候必须进行环境的搭建，在进行hadoop的配置时，由于涉及的是分布式，因此我们需要多台机器的协助，虽然我们不能同">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/wmware打开.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/wmware虚拟机配置.png">
@@ -125,10 +125,10 @@
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/查看网关地址.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/静态ip配置.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/images/dns.png">
-<meta property="og:updated_time" content="2019-07-27T08:35:23.907Z">
+<meta property="og:updated_time" content="2019-08-05T14:47:33.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据处理平台Hadoop（二）">
-<meta name="twitter:description" content="搜索微信公众号:’AI-ming3526’或者’计算机视觉这件小事’ 获取更多机器学习干货github：https://github.com/aimi-cn/AILearners   本文参考地址：[apachecn/AiLearning] 本文出现的所有代码，均可在github上下载，不妨来个Star把谢谢~：Github代码地址 大数据处理平台Hadoop（二）Hadoop节点的准备通过上一">
+<meta name="twitter:description" content="大数据处理平台Hadoop（二）Hadoop节点的准备通过上一章的学习和理解，相信读者朋友们和我一样已经理解了hadoop的发展和hadoop是个什么平台，hadoop的核心是hdfs分布式文件系统和mapreduce。但是，我们要使用分布式文件系统(HDFS)和mapreduce的时候必须进行环境的搭建，在进行hadoop的配置时，由于涉及的是分布式，因此我们需要多台机器的协助，虽然我们不能同">
 <meta name="twitter:image" content="https://chen-tzliang.github.io/about/images/wmware打开.png">
 
 
@@ -390,17 +390,11 @@
       
 
       
-        <blockquote>
-<p>搜索微信公众号:’AI-ming3526’或者’计算机视觉这件小事’ 获取更多机器学习干货<br>github：<a href="https://github.com/aimi-cn/AILearners" target="_blank" rel="noopener">https://github.com/aimi-cn/AILearners</a> </p>
-</blockquote>
-<p>本文参考地址：[<a href="https://github.com/apachecn/AiLearning" target="_blank" rel="noopener">apachecn/AiLearning</a>]</p>
-<p>本文出现的所有代码，均可在github上下载，不妨来个Star把谢谢~：<a href="https://github.com/aimi-cn/AILearners" target="_blank" rel="noopener">Github代码地址</a></p>
-<h1 id="大数据处理平台Hadoop（二）"><a href="#大数据处理平台Hadoop（二）" class="headerlink" title="大数据处理平台Hadoop（二）"></a>大数据处理平台Hadoop（二）</h1><h2 id="Hadoop节点的准备"><a href="#Hadoop节点的准备" class="headerlink" title="Hadoop节点的准备"></a>Hadoop节点的准备</h2><p>通过上一章的学习和理解，相信读者朋友们和我一样已经理解了hadoop的发展和hadoop是个什么平台，hadoop的核心是hdfs分布式文件系统和mapreduce。但是，我们要使用分布式文件系统(HDFS)和mapreduce的时候必须进行环境的搭建，在进行hadoop的配置时，由于涉及的是分布式，因此我们需要多台机器的协助，虽然我们不能同时拥有多台电脑，但是，一些虚拟机技术带给我们学习Hadoop的方便。在准备学习hadoop平台时，希望读者朋友先准备4台虚拟机，当然要是读者朋友们有条件的话，可以得到节点也可以忽略虚拟机的安装。<a id="more"></a></p>
+        <h1 id="大数据处理平台Hadoop（二）"><a href="#大数据处理平台Hadoop（二）" class="headerlink" title="大数据处理平台Hadoop（二）"></a>大数据处理平台Hadoop（二）</h1><h2 id="Hadoop节点的准备"><a href="#Hadoop节点的准备" class="headerlink" title="Hadoop节点的准备"></a>Hadoop节点的准备</h2><p>通过上一章的学习和理解，相信读者朋友们和我一样已经理解了hadoop的发展和hadoop是个什么平台，hadoop的核心是hdfs分布式文件系统和mapreduce。但是，我们要使用分布式文件系统(HDFS)和mapreduce的时候必须进行环境的搭建，在进行hadoop的配置时，由于涉及的是分布式，因此我们需要多台机器的协助，虽然我们不能同时拥有多台电脑，但是，一些虚拟机技术带给我们学习Hadoop的方便。在准备学习hadoop平台时，希望读者朋友先准备4台虚拟机，当然要是读者朋友们有条件的话，可以得到节点也可以忽略虚拟机的安装。<a id="more"></a></p>
 <h3 id="linux系统及虚拟机安装"><a href="#linux系统及虚拟机安装" class="headerlink" title="linux系统及虚拟机安装"></a>linux系统及虚拟机安装</h3><p>对于linux系统及虚拟机不熟悉的用户，可以先网上自行搜索学习，hadoop的使用是需要用到linux系统的，我这里使用的是centos7操作系统，在学习hadoop时请务必准备4台虚拟机，当然要是电脑配置不够高的朋友们，有条件的话可以准备4个节点。本人用的是Mac OS系统，所以安装过程和win10可能稍有不同，但是在centos7的安装也是一样的操作。win10用的是vmware，下面我仅仅介绍Mac用户的linux安装，mac用户和win10用户只是在虚拟机工具上稍有不同，但是在linux的安装上是一致的下面我们来介绍Linux系统centos7的安装。</p>
 <h4 id="centos7安装"><a href="#centos7安装" class="headerlink" title="centos7安装"></a>centos7安装</h4><p>win10和Mac用户安装centos7的时候大同小异，只不过是软件的不一样，Mac用户用虚拟软件是wmware fushion，下面我们进行安装</p>
-<ol>
-<li>创建新的虚拟机<br><center><br><img src="https://chen-tzliang.github.io/about/images/wmware打开.png" width="70%" height="10%"><br><br></center></li>
-</ol>
+<p>1.创建新的虚拟机</p>
+<p><center><br><img src="https://chen-tzliang.github.io/about/images/wmware打开.png" width="70%" height="10%"><br><br></center></p>
 <p>2.虚拟机的配置</p>
 <p>选择准备好的镜像文件及进行虚拟机的配置，一直进行继续下去，操作系统选择centOS7 64位，网络方式为NAT模式，内存根据自己爱好进行分配，条件允许一般为1g-2g最好，硬盘根据需要自己来选择，还有其他设备的选择一般选择默认方式，最后结果如下图</p>
 <p><center><br><img src="https://chen-tzliang.github.io/about/images/wmware虚拟机配置.png" width="70%" height="10%"><br><br></center></p>
@@ -456,7 +450,7 @@
   <p><span>本文标题:</span><a href="/2019/07/24/hadoop-2/">大数据处理平台Hadoop（二）</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年07月24日 - 22:02</p>
-  <p><span>最后更新:</span>2019年07月27日 - 16:35</p>
+  <p><span>最后更新:</span>2019年08月05日 - 22:47</p>
   <p><span>原始链接:</span><a href="/2019/07/24/hadoop-2/" title="大数据处理平台Hadoop（二）">https://chen-tzliang.github.io/2019/07/24/hadoop-2/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/07/24/hadoop-2/" aria-label="复制成功！"></i></span>
   </p>
@@ -517,6 +511,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/05/hadoop-3/" rel="prev" title="hadoop3">
+                hadoop3 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -621,7 +619,7 @@ var jiathis_config={
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
