@@ -96,7 +96,7 @@
 
 
 
-  <meta name="keywords" content="hello">
+  <meta name="keywords" content="hadoop,">
 
 
 
@@ -107,17 +107,23 @@
 
 
 
-<meta name="description" content="一只脱缰的哈士奇">
+<meta name="description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk，hadoop的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习">
+<meta name="keywords" content="hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hadoop3">
+<meta property="og:title" content="大数据处理平台Hadoop（三）">
 <meta property="og:url" content="https://chen-tzliang.github.io/2019/08/05/hadoop-3/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="一只脱缰的哈士奇">
+<meta property="og:description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk，hadoop的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-05T09:47:26.136Z">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/ip及用户名.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/输入密码.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/成功登录.png">
+<meta property="og:updated_time" content="2019-08-08T05:30:03.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hadoop3">
-<meta name="twitter:description" content="一只脱缰的哈士奇">
+<meta name="twitter:title" content="大数据处理平台Hadoop（三）">
+<meta name="twitter:description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk，hadoop的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习">
+<meta name="twitter:image" content="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png">
 
 
 
@@ -153,7 +159,7 @@
 
 
 
-  <title>hadoop3 | Czl的博客</title>
+  <title>大数据处理平台Hadoop（三） | Czl的博客</title>
   
 
 
@@ -306,7 +312,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hadoop3</h1>
+          <h1 class="post-title" itemprop="name headline">大数据处理平台Hadoop（三）</h1>
         
 
         <div class="post-meta">
@@ -328,6 +334,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bigdata/" itemprop="url" rel="index">
+                    <span itemprop="name">bigdata</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -356,7 +384,17 @@
       
 
       
-        
+        <h1 id="大数据处理平台Hadoop（三）"><a href="#大数据处理平台Hadoop（三）" class="headerlink" title="大数据处理平台Hadoop（三）"></a>大数据处理平台Hadoop（三）</h1><h2 id="Hadoop的远程登录工具及jdk，hadoop的安装"><a href="#Hadoop的远程登录工具及jdk，hadoop的安装" class="headerlink" title="Hadoop的远程登录工具及jdk，hadoop的安装"></a>Hadoop的远程登录工具及jdk，hadoop的安装</h2><p>通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章，我们介绍的是用远程登录工具登录我们的节点，并且在节点安装hadoop和jdk。<a id="more"></a></p>
+<h3 id="Hadoop的远程登录工具"><a href="#Hadoop的远程登录工具" class="headerlink" title="Hadoop的远程登录工具"></a>Hadoop的远程登录工具</h3><p>对于远程登录工具，我们的选择是多种多样的，为什么要用远程登录工具呢，我们都知道，在工作或者其他环境下，我们的服务器是放置在机房里的，那么我们对这些服务器进行操作要怎么办，这个时候我们必须得通过远程登录工具连接上我们的服务器，也称hadoop集群，我们通过远程登录工具来对这些集群进行操作。远程登录工具有很多，例如putty，SecureCRT等。下面我们用的是SecureCRT，对于macos用户可以直接用终端连接，但是本文用的是SecureCRT。</p>
+<h4 id="SecureCRT登录服务器"><a href="#SecureCRT登录服务器" class="headerlink" title="SecureCRT登录服务器"></a>SecureCRT登录服务器</h4><p>1.创建新的连接</p>
+<p><center><br><img src="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png" width="70%" height="10%"><br><br></center></p>
+<p>2.输入节点的ip和用户名</p>
+<p><center><br><img src="https://chen-tzliang.github.io/about/hadoop3/ip及用户名.png" width="70%" height="10%"><br><br></center></p>
+<p>3.输入密码</p>
+<p><center><br><img src="https://chen-tzliang.github.io/about/hadoop3/输入密码.png" width="70%" height="10%"><br><br></center></p>
+<p>4.成功登录服务器</p>
+<p><center><br><img src="https://chen-tzliang.github.io/about/hadoop3/成功登录.png" width="70%" height="10%"><br><br></center></p>
+
       
     </div>
     
@@ -367,6 +405,35 @@
     
       <div>
         
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/08/05/hadoop-3/">大数据处理平台Hadoop（三）</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
+  <p><span>发布时间:</span>2019年08月05日 - 17:47</p>
+  <p><span>最后更新:</span>2019年08月08日 - 13:30</p>
+  <p><span>原始链接:</span><a href="/2019/08/05/hadoop-3/" title="大数据处理平台Hadoop（三）">https://chen-tzliang.github.io/2019/08/05/hadoop-3/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/08/05/hadoop-3/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+  });
+    });  
+</script>
+
       </div>
            
     
@@ -383,6 +450,12 @@
 
     
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"><i class="fa fa-tag"></i>hadoop</a>
+          
+        </div>
       
 
       
@@ -479,8 +552,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -552,6 +634,22 @@ var jiathis_config={
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（三）"><span class="nav-text">大数据处理平台Hadoop（三）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop的远程登录工具及jdk，hadoop的安装"><span class="nav-text">Hadoop的远程登录工具及jdk，hadoop的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop的远程登录工具"><span class="nav-text">Hadoop的远程登录工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SecureCRT登录服务器"><span class="nav-text">SecureCRT登录服务器</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

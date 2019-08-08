@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[hadoop3]]></title>
+    <title><![CDATA[大数据处理平台Hadoop（三）]]></title>
     <url>%2F2019%2F08%2F05%2Fhadoop-3%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk，hadoop的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章，我们介绍的是用远程登录工具登录我们的节点，并且在节点安装hadoop和jdk。 Hadoop的远程登录工具对于远程登录工具，我们的选择是多种多样的，为什么要用远程登录工具呢，我们都知道，在工作或者其他环境下，我们的服务器是放置在机房里的，那么我们对这些服务器进行操作要怎么办，这个时候我们必须得通过远程登录工具连接上我们的服务器，也称hadoop集群，我们通过远程登录工具来对这些集群进行操作。远程登录工具有很多，例如putty，SecureCRT等。下面我们用的是SecureCRT，对于macos用户可以直接用终端连接，但是本文用的是SecureCRT。 SecureCRT登录服务器1.创建新的连接 2.输入节点的ip和用户名 3.输入密码 4.成功登录服务器]]></content>
+      <categories>
+        <category>bigdata</category>
+      </categories>
+      <tags>
+        <tag>hadoop</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[大数据处理平台Hadoop（二）]]></title>
