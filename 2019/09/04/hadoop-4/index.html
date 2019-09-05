@@ -107,13 +107,13 @@
 
 
 
-<meta name="description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
+<meta name="description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布模式搭建通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
 <meta name="keywords" content="hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hadoop-4">
 <meta property="og:url" content="https://chen-tzliang.github.io/2019/09/04/hadoop-4/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
+<meta property="og:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布模式搭建通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/1.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/2.png">
@@ -123,10 +123,10 @@
 <meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/7.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/8.png">
 <meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/9.png">
-<meta property="og:updated_time" content="2019-09-05T12:40:23.227Z">
+<meta property="og:updated_time" content="2019-09-05T13:18:10.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop-4">
-<meta name="twitter:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
+<meta name="twitter:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布模式搭建通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。">
 <meta name="twitter:image" content="https://chen-tzliang.github.io/about/hadoop4/1.png">
 
 
@@ -388,7 +388,7 @@
       
 
       
-        <h1 id="大数据处理平台Hadoop（四）"><a href="#大数据处理平台Hadoop（四）" class="headerlink" title="大数据处理平台Hadoop（四）"></a>大数据处理平台Hadoop（四）</h1><h2 id="Hadoop安装、单机模式及伪分布式"><a href="#Hadoop安装、单机模式及伪分布式" class="headerlink" title="Hadoop安装、单机模式及伪分布式"></a>Hadoop安装、单机模式及伪分布式</h2><p>通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。<a id="more"></a></p>
+        <h1 id="大数据处理平台Hadoop（四）"><a href="#大数据处理平台Hadoop（四）" class="headerlink" title="大数据处理平台Hadoop（四）"></a>大数据处理平台Hadoop（四）</h1><h2 id="Hadoop安装、单机模式及伪分布模式搭建"><a href="#Hadoop安装、单机模式及伪分布模式搭建" class="headerlink" title="Hadoop安装、单机模式及伪分布模式搭建"></a>Hadoop安装、单机模式及伪分布模式搭建</h2><p>通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。<a id="more"></a></p>
 <h3 id="hadoop的安装"><a href="#hadoop的安装" class="headerlink" title="hadoop的安装"></a>hadoop的安装</h3><p>在安装hadoop之前，我们需要准备好一些软件包，这里由于我学习的时候用的hadoop版本比较低，所以建议读者根据需要下载新的版本，不同的版本可能增加了不同的一些新的属性，这里在hadoop的安装时会给出hadoop软件包的下载网址，显然hadoop也是apache的产品。</p>
 <h3 id="hadoop的安装-1"><a href="#hadoop的安装-1" class="headerlink" title="hadoop的安装"></a>hadoop的安装</h3><p>1.下载hadoop-x.y.z.tar.gz</p>
 <p>网址：<a href="https://hadoop.apache.org/releases.html" target="_blank" rel="noopener">https://hadoop.apache.org/releases.html</a></p>
@@ -459,9 +459,20 @@
 <h3 id="hadoop的伪分布模式"><a href="#hadoop的伪分布模式" class="headerlink" title="hadoop的伪分布模式"></a>hadoop的伪分布模式</h3><p>运行：伪分布模式这种模式也是在一台单机上运行，但用不同的Java进程模仿分布式运行中的各类结点。</p>
 <p>配置：伪分布模式在“单节点集群”上运行Hadoop，其中所有的守护进程都运行在同一台机器上。</p>
 <p>交互：伪分布模式在单机模式之上增加了代码调试功能，允许你检查内存使用情况，HDFS输入输出，以及其他的守护进程交互</p>
-<h3 id="hadoop伪分布式的搭建"><a href="#hadoop伪分布式的搭建" class="headerlink" title="hadoop伪分布式的搭建"></a>hadoop伪分布式的搭建</h3><p>1.进入hadoop的配置目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt;cd /soft/hadoop/etc/hadoop</span><br><span class="line">$&gt;ls</span><br></pre></td></tr></table></figure></p>
+<h3 id="hadoop伪分布式的搭建-1"><a href="#hadoop伪分布式的搭建-1" class="headerlink" title="hadoop伪分布式的搭建(1)"></a>hadoop伪分布式的搭建(1)</h3><p>1.进入hadoop的配置目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt;cd /soft/hadoop/etc/hadoop</span><br><span class="line">$&gt;ls</span><br></pre></td></tr></table></figure></p>
 <p>2.配置core-site.xml</p>
+<p>core-site.xml文件是集群的全局参数，该文件是用于用于定义系统级别的参数，如HDFS URL 、Hadoop的临时目录等，下面我们配置的伪分布式只配置hdfs的url，至于其他的全局参数用的是默认的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;nano core-site.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;hdfs://localhost/&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
 <p>3.配置hdfs-site.xml</p>
+<p>hdfs-site.xml文件配置的是hdfs，该文件的配置项是名称节点和数据节点的存放位置、文件副本的个数、文件的读取权限等。下面我们对这个文件进行配置，这里我们只设置副本的数目，并设置为1，其他的使用默认值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;nano hdfs-site.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;1&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>4.配置mapred-site.xml</p>
+<p>mapred-site.xml是Mapreduce参数，他的主要内容包括JobHistory Server和应用程序参数两部分，如reduce任务的默认个数、任务所能够使用内存的默认上下限等。这里我们设置yarn的为资源管理框架。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt;cp mapred-site.xml.template mapred-site.xml</span><br><span class="line">$&gt;nano mapred-site.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>5.配置yarn-site.xml</p>
+<p>yarn-site.xml是集群资源管理系统参数，他的主要内容是配置ResourceManager ，nodeManager的通信端口，web监控端口等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;nano yarn-site.xml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;localhost&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">		&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">		&lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>这一篇文章我们讲解了hadoop的安装，单机模式及伪分布式的一部分xml的配置，当然伪分布式还没有配置完成，下一章将继续讲解伪分布式的搭建，这一章读者朋友们可以先搭建后伪分布式的一小部分，下一章将进行完整的伪分布式的搭建和最实用的完全分布式的搭建，这一章就先在这里结束，更多精彩内容请留意下一章。</p>
 
       
     </div>
@@ -482,7 +493,7 @@
   <p><span>本文标题:</span><a href="/2019/09/04/hadoop-4/">hadoop-4</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年09月04日 - 10:38</p>
-  <p><span>最后更新:</span>2019年09月05日 - 20:40</p>
+  <p><span>最后更新:</span>2019年09月05日 - 21:18</p>
   <p><span>原始链接:</span><a href="/2019/09/04/hadoop-4/" title="hadoop-4">https://chen-tzliang.github.io/2019/09/04/hadoop-4/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/09/04/hadoop-4/" aria-label="复制成功！"></i></span>
   </p>
@@ -712,7 +723,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（四）"><span class="nav-text">大数据处理平台Hadoop（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop安装、单机模式及伪分布式"><span class="nav-text">Hadoop安装、单机模式及伪分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装"><span class="nav-text">hadoop的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装-1"><span class="nav-text">hadoop的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的单机模式"><span class="nav-text">hadoop的单机模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop单机模式搭建"><span class="nav-text">hadoop单机模式搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的伪分布模式"><span class="nav-text">hadoop的伪分布模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop伪分布式的搭建"><span class="nav-text">hadoop伪分布式的搭建</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（四）"><span class="nav-text">大数据处理平台Hadoop（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop安装、单机模式及伪分布模式搭建"><span class="nav-text">Hadoop安装、单机模式及伪分布模式搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装"><span class="nav-text">hadoop的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装-1"><span class="nav-text">hadoop的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的单机模式"><span class="nav-text">hadoop的单机模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop单机模式搭建"><span class="nav-text">hadoop单机模式搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的伪分布模式"><span class="nav-text">hadoop的伪分布模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop伪分布式的搭建-1"><span class="nav-text">hadoop伪分布式的搭建(1)</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
