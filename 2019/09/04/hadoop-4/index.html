@@ -107,18 +107,23 @@
 
 
 
-<meta name="description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
+<meta name="description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。 hadoop的安装在安装h">
 <meta name="keywords" content="hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hadoop-4">
 <meta property="og:url" content="https://chen-tzliang.github.io/2019/09/04/hadoop-4/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
+<meta property="og:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。 hadoop的安装在安装h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-04T02:42:32.556Z">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/1.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/2.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/4.png">
+<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop4/5.png">
+<meta property="og:updated_time" content="2019-09-05T09:38:16.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hadoop-4">
-<meta name="twitter:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
+<meta name="twitter:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。 hadoop的安装在安装h">
+<meta name="twitter:image" content="https://chen-tzliang.github.io/about/hadoop4/1.png">
 
 
 
@@ -379,7 +384,41 @@
       
 
       
-        <h1 id="大数据处理平台Hadoop（四）"><a href="#大数据处理平台Hadoop（四）" class="headerlink" title="大数据处理平台Hadoop（四）"></a>大数据处理平台Hadoop（四）</h1><h2 id="Hadoop安装、单机模式及伪分布式"><a href="#Hadoop安装、单机模式及伪分布式" class="headerlink" title="Hadoop安装、单机模式及伪分布式"></a>Hadoop安装、单机模式及伪分布式</h2>
+        <h1 id="大数据处理平台Hadoop（四）"><a href="#大数据处理平台Hadoop（四）" class="headerlink" title="大数据处理平台Hadoop（四）"></a>大数据处理平台Hadoop（四）</h1><h2 id="Hadoop安装、单机模式及伪分布式"><a href="#Hadoop安装、单机模式及伪分布式" class="headerlink" title="Hadoop安装、单机模式及伪分布式"></a>Hadoop安装、单机模式及伪分布式</h2><p>通过上一章的介绍和学习，相信读者朋友们已经掌握了怎么用自己的电脑登录服务器，我们懂得了远程登录工具的作用，还有的是我们还进行了节点的jdk配置，使我们的服务器更加的完善了，下面这一章我们将来介绍一下hadoop的安装以及单机调试模式，伪分布式这几个点。同样的，你搭建的4台机器也要安装上hadoop环境。</p>
+<h3 id="hadoop的安装"><a href="#hadoop的安装" class="headerlink" title="hadoop的安装"></a>hadoop的安装</h3><p>在安装hadoop之前，我们需要准备好一些软件包，这里由于我学习的时候用的hadoop版本比较低，所以建议读者根据需要下载新的版本，不同的版本可能增加了不同的一些新的属性，这里在hadoop的安装时会给出hadoop软件包的下载网址，显然hadoop也是apache的产品。</p>
+<h3 id="hadoop的安装-1"><a href="#hadoop的安装-1" class="headerlink" title="hadoop的安装"></a>hadoop的安装</h3><p>1.下载hadoop-x.y.z.tar.gz</p>
+<p>网址：<a href="https://hadoop.apache.org/releases.html" target="_blank" rel="noopener">https://hadoop.apache.org/releases.html</a></p>
+<center>
+<img src="https://chen-tzliang.github.io/about/hadoop4/1.png" width="70%" height="10%">
+<br>
+</center>
+2.上传软件包
+
+通过远程登录工具，我们能把刚刚下载好的hadoop安装包发送到节点上去。
+<center>
+<img src="https://chen-tzliang.github.io/about/hadoop4/2.png" width="70%" height="10%">
+<br>
+</center>
+3.tar开软件包
+
+得到Hadoop的安装包之后，我们需要通过命令行把安装包解压，上一章为我们说过，我们的一切关于大数据的软件一致保存在/soft文件下，因此我们在tar开文件的时候用-C指定了tar开文件的目录是/soft，命令行为
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;tar -zxvf hadoop-x.y.z.tar.gz -C /soft</span><br></pre></td></tr></table></figure>
+
+<center>
+<img src="https://chen-tzliang.github.io/about/hadoop4/4.png" width="70%" height="10%">
+<br>
+</center>
+
+<p>4.创建符号连接</p>
+<p>为了方便找到hadoop的home目录，我们跟上一章的思路是一样的，为hadoop的home目录创建符号连接，这样能使我们更加方便的命名hadoop的家目录，使配置更加直观简洁，具体命令行为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;ln -s hadoop-x.y.z hadoop</span><br></pre></td></tr></table></figure></p>
+<center>
+<img src="https://chen-tzliang.github.io/about/hadoop4/5.png" width="70%" height="10%">
+<br>
+</center>
+
+<p>5.验证hadoop是否安装成功</p>
+<p>6.配置环境变量</p>
+
       
     </div>
     
@@ -399,7 +438,7 @@
   <p><span>本文标题:</span><a href="/2019/09/04/hadoop-4/">hadoop-4</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
   <p><span>发布时间:</span>2019年09月04日 - 10:38</p>
-  <p><span>最后更新:</span>2019年09月04日 - 10:42</p>
+  <p><span>最后更新:</span>2019年09月05日 - 17:38</p>
   <p><span>原始链接:</span><a href="/2019/09/04/hadoop-4/" title="hadoop-4">https://chen-tzliang.github.io/2019/09/04/hadoop-4/</a>
     <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/09/04/hadoop-4/" aria-label="复制成功！"></i></span>
   </p>
@@ -629,7 +668,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（四）"><span class="nav-text">大数据处理平台Hadoop（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop安装、单机模式及伪分布式"><span class="nav-text">Hadoop安装、单机模式及伪分布式</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（四）"><span class="nav-text">大数据处理平台Hadoop（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop安装、单机模式及伪分布式"><span class="nav-text">Hadoop安装、单机模式及伪分布式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装"><span class="nav-text">hadoop的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop的安装-1"><span class="nav-text">hadoop的安装</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
