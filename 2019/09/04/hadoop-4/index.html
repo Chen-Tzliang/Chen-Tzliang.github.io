@@ -107,27 +107,18 @@
 
 
 
-<meta name="description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章">
+<meta name="description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
 <meta name="keywords" content="hadoop">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大数据处理平台Hadoop（三）">
-<meta property="og:url" content="https://chen-tzliang.github.io/2019/08/05/hadoop-3/index.html">
+<meta property="og:title" content="hadoop-4">
+<meta property="og:url" content="https://chen-tzliang.github.io/2019/09/04/hadoop-4/index.html">
 <meta property="og:site_name" content="Czl的博客">
-<meta property="og:description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章">
+<meta property="og:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/ip及用户名.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/输入密码.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/成功登录.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/上传jdk.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/tar开jdk.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/配置jdk.png">
-<meta property="og:image" content="https://chen-tzliang.github.io/about/hadoop3/jdk测试.png">
-<meta property="og:updated_time" content="2019-08-30T11:14:52.260Z">
+<meta property="og:updated_time" content="2019-09-04T02:42:32.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大数据处理平台Hadoop（三）">
-<meta name="twitter:description" content="大数据处理平台Hadoop（三）Hadoop的远程登录工具及jdk的安装通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章">
-<meta name="twitter:image" content="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png">
+<meta name="twitter:title" content="hadoop-4">
+<meta name="twitter:description" content="大数据处理平台Hadoop（四）Hadoop安装、单机模式及伪分布式">
 
 
 
@@ -157,13 +148,13 @@
 
 
 
-  <link rel="canonical" href="https://chen-tzliang.github.io/2019/08/05/hadoop-3/">
+  <link rel="canonical" href="https://chen-tzliang.github.io/2019/09/04/hadoop-4/">
 
 
 
 
 
-  <title>大数据处理平台Hadoop（三） | Czl的博客</title>
+  <title>hadoop-4 | Czl的博客</title>
   
 
 
@@ -299,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chen-tzliang.github.io/2019/08/05/hadoop-3/">
+    <link itemprop="mainEntityOfPage" href="https://chen-tzliang.github.io/2019/09/04/hadoop-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈紫良">
@@ -316,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">大数据处理平台Hadoop（三）</h1>
+          <h1 class="post-title" itemprop="name headline">hadoop-4</h1>
         
 
         <div class="post-meta">
@@ -328,8 +319,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-05T17:47:26+08:00">
-                2019-08-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-04T10:38:36+08:00">
+                2019-09-04
               </time>
             
 
@@ -388,88 +379,7 @@
       
 
       
-        <h1 id="大数据处理平台Hadoop（三）"><a href="#大数据处理平台Hadoop（三）" class="headerlink" title="大数据处理平台Hadoop（三）"></a>大数据处理平台Hadoop（三）</h1><h2 id="Hadoop的远程登录工具及jdk的安装"><a href="#Hadoop的远程登录工具及jdk的安装" class="headerlink" title="Hadoop的远程登录工具及jdk的安装"></a>Hadoop的远程登录工具及jdk的安装</h2><p>通过上一章的学习，相信读者朋友能够搭建出centos7的hadoop节点，要深入学习hadoop，请读者务必认真搭建好Hadoop的节点，毕竟现实中的我们没有真实的hadoop集群，我们只能靠电脑虚拟出来，通过虚拟机技术来模拟服务器。请读者朋友记住，这次我们需要的是4台虚拟机，请认真的配置好再进行下面章节的学习。下面的这一章，我们介绍的是用远程登录工具登录我们的节点，并且在节点安装jdk。<a id="more"></a></p>
-<h3 id="Hadoop的远程登录工具"><a href="#Hadoop的远程登录工具" class="headerlink" title="Hadoop的远程登录工具"></a>Hadoop的远程登录工具</h3><p>对于远程登录工具，我们的选择是多种多样的，为什么要用远程登录工具呢，我们都知道，在工作或者其他环境下，我们的服务器是放置在机房里的，那么我们对这些服务器进行操作要怎么办，这个时候我们必须得通过远程登录工具连接上我们的服务器，也称hadoop集群，我们通过远程登录工具来对这些集群进行操作。远程登录工具有很多，例如putty，SecureCRT等。下面我们用的是SecureCRT，对于macos用户可以直接用终端连接，但是本文用的是SecureCRT。</p>
-<h4 id="SecureCRT登录服务器"><a href="#SecureCRT登录服务器" class="headerlink" title="SecureCRT登录服务器"></a>SecureCRT登录服务器</h4><p>1.创建新的连接</p>
-<p>或许不是所有的远程登录工具都一样，但是大致的操作都是一样的，当我们要创建新的连接的时候，需要点击以下的quick connection来创建新的连接。</p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/创建新的连接.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>2.输入节点的ip和用户名</p>
-<p>当用户创建了新的连接时是需要用户输入相应的ip和用户名的，这里的ip估计阅读过第二章的朋友们应该不会陌生，上一章我们为什么要静态ip，目的之一就是为了用远程工具登录特定的节点。这里的ip就是虚拟节点的ip地址，用户名就是root。</p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/ip及用户名.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>3.输入密码</p>
-<p>完成新连接的创建之后，我们要打开这个连接，必须要输入密码，这个密码就是用户名的root密码，当我们输入密码就可以登录节点了</p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/输入密码.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>4.成功登录服务器</p>
-<p>下图就是当你成功登录时会出现的页面，当用户能看见出现你的虚拟服务器的终端界面时就表明你成功登录了服务器，并且能够进行服务器的操作。</p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/成功登录.png" width="70%" height="10%">
-<br>
-</center>
-上面是我们使用工具远程登录服务器的操作过程，很多时候我们操作集群的时候都是通过远程登录工具来完成的，以后我们工作中也会经常利用到远程登录工具的。
-
-#### jdk的安装
-
-下面我们在搭建hadoop集群运用hdfs和mapreduced的时候，必须要在每个节点上安装好jdk，下面我们将进行单个节点jdk的安装，先从一个节点来进行配置。
-
-#### 虚拟节点安装jdk
-
-1.上传jdk安装文件
-
-在虚拟节点上安装jdk，我们需要下载jdk-8u65-linux-x64.tar.gz，具体的网址为
-
-https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
-
-下载好jdk-8u65-linux-x64.tar.gz后我们可以通过SecureCRT把文件上传至虚拟节点。
-
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/上传jdk.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>使用SecureCRT的sftp可以上传文件，具体其他的上传方法可以自行网上搜索。</p>
-<p>2.创建/soft目录用来存放各种组件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;mkdir /soft</span><br></pre></td></tr></table></figure></p>
-<p>3.tar开jdk文件</p>
-<p>把上传的jdk安装文件tar开保存至/soft<br>刚刚通过上传的文件存放在了～目录下，我们登录虚拟节点后通过ls可以看见jdk-8u65-linux-x64.tar.gz,表示jdk安装包上传成功，下面我们需要安装jdk，这时我们需要使用命令行把刚刚上传好的文件tar开，并且要放进/soft目录，具体的命令行如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;tar -zxvf jdk-8u65-linux-x64.tar.gz -C /soft</span><br></pre></td></tr></table></figure></p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/tar开jdk.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>tar开jdk安装包后进入/soft文件夹会发现jdk1.8.0_65文件，这个就是我们要tar开好的文件，下面为了方便，我们创建软连接，软连接相当于快捷方式，我们用jdk代表jdk1.8.0_65这个文件，具体命令行如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&gt;cd /soft</span><br><span class="line">$&gt;ln -s jdk1.8.0_65/ jdk</span><br></pre></td></tr></table></figure></p>
-<p>这样我们创建的jdk软连接就指向了jdk1.8.0_65文件夹。</p>
-<p>4.配置jdk环境变量</p>
-<p>jdk的环境变量在/etc/profile中配置，我们通过编辑 /etc/profile，在这个文件的末尾添加上<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#java</span><br><span class="line">export JAVA_HOME=/soft/jdk</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br></pre></td></tr></table></figure></p>
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/配置jdk.png" width="70%" height="10%">
-<br>
-</center>
-在加入这两行配置之后，我们需要使文件生效，我们要用命令行
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&gt;source /etc/profile</span><br></pre></td></tr></table></figure>
-
-5.测试jdk安装
-
-安装完成后像在win10或者macos上测试一样，使用java -verion，如果出现以下界面，就表示jdk安装成功！
-
-<center>
-<img src="https://chen-tzliang.github.io/about/hadoop3/jdk测试.png" width="70%" height="10%">
-<br>
-</center>
-
-<p>这一篇文章同样是进行虚拟节点hadoop环境的配置，在本章中介绍了一些远程登录工具，我们能通过这些工具登录进去我们的虚拟节点或者公司的服务器中，还有就是介绍了节点的jdk安装，同时希望读者认真阅读，并在自己节点上安装，同时应该注意的是，每一个节点都应该安装jdk，所以请读者朋友在你各个节点上都配置好。</p>
-
+        <h1 id="大数据处理平台Hadoop（四）"><a href="#大数据处理平台Hadoop（四）" class="headerlink" title="大数据处理平台Hadoop（四）"></a>大数据处理平台Hadoop（四）</h1><h2 id="Hadoop安装、单机模式及伪分布式"><a href="#Hadoop安装、单机模式及伪分布式" class="headerlink" title="Hadoop安装、单机模式及伪分布式"></a>Hadoop安装、单机模式及伪分布式</h2>
       
     </div>
     
@@ -486,12 +396,12 @@ https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-21
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2019/08/05/hadoop-3/">大数据处理平台Hadoop（三）</a></p>
+  <p><span>本文标题:</span><a href="/2019/09/04/hadoop-4/">hadoop-4</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 陈紫良 的个人博客">陈紫良</a></p>
-  <p><span>发布时间:</span>2019年08月05日 - 17:47</p>
-  <p><span>最后更新:</span>2019年08月30日 - 19:14</p>
-  <p><span>原始链接:</span><a href="/2019/08/05/hadoop-3/" title="大数据处理平台Hadoop（三）">https://chen-tzliang.github.io/2019/08/05/hadoop-3/</a>
-    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/08/05/hadoop-3/" aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2019年09月04日 - 10:38</p>
+  <p><span>最后更新:</span>2019年09月04日 - 10:42</p>
+  <p><span>原始链接:</span><a href="/2019/09/04/hadoop-4/" title="hadoop-4">https://chen-tzliang.github.io/2019/09/04/hadoop-4/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://chen-tzliang.github.io/2019/09/04/hadoop-4/" aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -541,8 +451,8 @@ https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-21
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/24/hadoop-2/" rel="next" title="大数据处理平台Hadoop（二）">
-                <i class="fa fa-chevron-left"></i> 大数据处理平台Hadoop（二）
+              <a href="/2019/08/05/hadoop-3/" rel="next" title="大数据处理平台Hadoop（三）">
+                <i class="fa fa-chevron-left"></i> 大数据处理平台Hadoop（三）
               </a>
             
           </div>
@@ -550,10 +460,6 @@ https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-21
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/04/hadoop-4/" rel="prev" title="hadoop-4">
-                hadoop-4 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -723,7 +629,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（三）"><span class="nav-text">大数据处理平台Hadoop（三）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop的远程登录工具及jdk的安装"><span class="nav-text">Hadoop的远程登录工具及jdk的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop的远程登录工具"><span class="nav-text">Hadoop的远程登录工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SecureCRT登录服务器"><span class="nav-text">SecureCRT登录服务器</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#大数据处理平台Hadoop（四）"><span class="nav-text">大数据处理平台Hadoop（四）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop安装、单机模式及伪分布式"><span class="nav-text">Hadoop安装、单机模式及伪分布式</span></a></li></ol></li></ol></div>
             
 
           </div>
